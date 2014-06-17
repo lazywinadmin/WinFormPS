@@ -20,6 +20,11 @@
 	
 	.EXAMPLE
 		Sort-ListViewColumn -ListView $listview1 -ColumnIndex 0
+		
+	.NOTES
+		SAPIEN Technologies, Inc.
+		http://www.sapien.com/
+		
 #>
 	param (
 		[ValidateNotNull()]
