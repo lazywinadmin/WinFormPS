@@ -29,6 +29,10 @@
 	
 	.EXAMPLE
 		Load-ListBox $listBox1 (Get-Process) "ProcessName"
+		
+	.NOTES
+		SAPIEN Technologies, Inc.
+		http://www.sapien.com/
 #>
 	Param (
 		[ValidateNotNull()]
