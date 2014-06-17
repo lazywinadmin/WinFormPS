@@ -27,6 +27,10 @@
 	
 	.EXAMPLE
 		Add-ListViewItem -ListView $listview1 -Items "Test" -Group $listview1.Groups[0] -ImageIndex 0 -SubItems "Installed"
+		
+	.NOTES
+		SAPIEN Technologies, Inc.
+		http://www.sapien.com/
 #>
 	
 	Param (
