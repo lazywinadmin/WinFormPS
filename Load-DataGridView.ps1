@@ -15,8 +15,12 @@
 	
 	.PARAMETER  DataMember
 		Sets the name of the list or table in the data source for which the DataGridView is displaying data.
-
+	
+	.NOTES
+		SAPIEN Technologies, Inc.
+		http://www.sapien.com/
 	#>
+	
 	Param (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
