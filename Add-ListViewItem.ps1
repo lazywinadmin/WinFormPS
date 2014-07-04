@@ -27,6 +27,9 @@
 	
 	.EXAMPLE
 		Add-ListViewItem -ListView $listview1 -Items "Test" -Group $listview1.Groups[0] -ImageIndex 0 -SubItems "Installed"
+	
+	.EXAMPLE		
+		Add-ListViewItem -ListView $listview1 -Items $Output.SamAccountName -SubItems $Output.isLockedOut, $Output.Description, $Output.DN
 		
 	.NOTES
 		SAPIEN Technologies, Inc.
