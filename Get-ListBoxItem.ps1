@@ -29,8 +29,7 @@
 				   ParameterSetName = "All",
 				   Mandatory)]
 		[Parameter(
-				   ParameterSetName = "Selected",
-				   Mandatory)]
+				   ParameterSetName = "Selected")]
 		[switch]$ShowCount,
 		
 		[Parameter(
@@ -54,7 +53,7 @@
 	
 	IF ($SelectedItem)
 	{
-		IF ($Count) { $ListBox.SelectedItems.Count }
+		IF ($ShowCount) { $ListBox.SelectedItems.Count }
 		ELSE { $ListBox.SelectedItems }
 	}
 }
