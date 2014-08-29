@@ -1,4 +1,4 @@
-WinFormsPS
+WinFormPS
 ==========
 
 If you are among those creating PowerShell User Interface using PowerShell Studio from SAPIEN, you will realize the big need for functions to interact with the different WinForms Controls.
