@@ -4,7 +4,14 @@
 #-------------------------------------------------------------------------
 # Module Name:  WinFormPS
 ##########################################################################
+<#
+Todo:
+	-Set Color in Datagridview (odd or even row, specific row, where value is gt ot lw than)
 
+#>
+
+
+# DataGridView
 function Add-DataGridViewColumn
 {
 <#
@@ -135,6 +142,17 @@ function Append-Richtextbox
 	}
 }
 
+function Clear-ListBox
+{
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.ListBox]$ListBox)
+	
+	#Clear the ListBox
+	$ListBox.Items.Clear()
+}
+
 function Clear-RichTextBox
 {
 	PARAM (
@@ -145,17 +163,6 @@ function Clear-RichTextBox
 	
 	#Clear the RichTextBox
 	$RichTextBox.Clear()
-}
-
-function Clear-ListBox
-{
-	PARAM (
-		[ValidateNotNull()]
-		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.ListBox]$ListBox)
-	
-	#Clear the ListBox
-	$ListBox.Items.Clear()
 }
 
 function Disable-TabControl
@@ -176,6 +183,111 @@ function Enable-TabControl
 		[System.Windows.Forms.TabControl]$TabControl
 	)
 	$TabControl.Enabled = $true
+}
+
+function Get-DataGridViewItem
+{
+	<#
+		Add Count
+		Coordinate of the item (ROW index/Columnindex).value
+	#>
+	[CmdletBinding(DefaultParameterSetName = "CellAddress")]
+	PARAM (
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.DataGridView]$DataGridView,
+		
+		[Parameter(ParameterSetName = "CellAddress")]
+		[Switch]$CellAddress,
+		
+		[Parameter(ParameterSetName = "RowIndex")]
+		[Switch]$RowIndex,
+		
+		[Parameter(ParameterSetName = "ColumnIndex")]
+		[Switch]$ColumnIndex,
+		
+		[Parameter(Mandatory = $true, ParameterSetName = "SelectedRow")]
+		[Switch]$SelectedRow,
+		
+		[Parameter(ParameterSetName = "SelectedRow")]
+		[int]$ColumnNumber,
+		
+		[Parameter(ParameterSetName = "SelectedRow")]
+		[switch]$AllColumns
+	)
+	PROCESS
+	{
+		IF ($PSBoundParameters['CellAddress'])
+		{
+			foreach ($SelectedCell in $datagridview1.SelectedCells)
+			{
+				New-Object -TypeName PSObject -Property @{
+					RowIndex = $SelectedCell.RowIndex
+					ColumnIndex = $SelectedCell.ColumnIndex
+				}
+			}
+		}
+		IF ($PSBoundParameters['RowIndex'])
+		{
+			foreach ($SelectedCell in $datagridview1.SelectedCells)
+			{
+				$SelectedCell.RowIndex
+			}
+		}
+		IF ($PSBoundParameters['ColumnIndex'])
+		{
+			foreach ($SelectedCell in $datagridview1.SelectedCells)
+			{
+				$SelectedCell.ColumnIndex
+			}
+		}
+		IF ($PSBoundParameters['SelectedRow'])
+		{
+			<#
+			$SelectedRowCount = $DataGridView.Rows.GetRowCount('Selected')
+			#$DisplayedRowCount = $DataGridView.Rows.GetRowCount('Displayed')
+			if ($SelectedRowCount -gt 0)
+			{
+				IF ($PSboundparameters['ColumnNumber'])
+				{
+					for ([int]$i = 0, $i -gt $SelectedRowCount; $i++) { }
+					$SelectedRow
+					$datagridview1
+					
+				}
+				if (-not ($PSboundparameters['ColumnNumber']) -and -not ($psboundparameter['AllColumns']))
+				{
+					$datagridview.SelectedRows[]
+				}
+			}
+			#>
+			
+			#[System.Windows.Forms.DataGridViewRow]
+			#foreach ($SelectedRow in
+			
+			foreach ($SelectedRow in $datagridview.SelectedCells)
+			{
+				$SelectedRow.value
+				
+				#Write-Warning -Message "[PROCESS] This does not work yet"
+			}
+		}
+	}#PROCESS
+}
+
+function Get-DataGridViewItemCount
+{
+	PARAM (
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.DataGridView]$DataGridView,
+	
+		[Parameter(Mandatory = $true)]
+		[ValidateSet("Displayed", "Frozen","None","ReadOnly","Resizable", "ResizableSet", "Selected", "Visible")]
+		[System.Windows.Forms.DataGridViewElementStates]$Type
+	)
+	PROCESS
+	{
+		$SelectedRowCount = $DataGridView.Rows.GetRowCount($Type)
+	}
 }
 
 function Get-ListBoxItem
@@ -736,19 +848,4 @@ function Load-ListBox
 }
 
 
-Export-ModuleMember - `
-					Sort-ListViewColumn `
-, Add-DataGridViewColumn `
-, Add-DataGridViewRow `
-, Add-ListViewItem `
-, Append-Richtextbox `
-, Clear-RichTextBox `
-, Clear-ListBox `
-, Disable-TabControl `
-, Enable-TabControl `
-, Get-ListBoxItem `
-, Get-ListViewItem `
-, Load-DataGridView `
-, Load-ListBox `
-, Remove-ListBoxItem `
-, Set-DataGridViewColumn
+Export-ModuleMember -Function *
