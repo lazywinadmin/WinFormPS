@@ -7,7 +7,7 @@
 <#
 Todo:
 	-Set Color in Datagridview (odd or even row, specific row, where value is gt ot lw than)
-
+	-
 #>
 
 
@@ -44,7 +44,6 @@ function Add-DataGridViewRow
 	#foreach ($item in $Values){
 	# Add a row
 	$DataGridView.Rows.Add($Values)
-	
 }
 
 function Append-Richtextbox
@@ -196,15 +195,15 @@ function Get-DataGridViewItem
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
 		
-		[Parameter(ParameterSetName = "CellAddress")]
-		[Switch]$CellAddress,
+		[Parameter(Mandatory = $true,ParameterSetName = "SelectedCell")]
+		[Switch]$SelectedCell,
 		
-		[Parameter(ParameterSetName = "RowIndex")]
-		[Switch]$RowIndex,
+		[Parameter(Mandatory = $true, ParameterSetName = "SelectedRowIndex")]
+		[Switch]$SelectedRowIndex,
 		
-		[Parameter(ParameterSetName = "ColumnIndex")]
-		[Switch]$ColumnIndex,
-		
+		[Parameter(Mandatory = $true, ParameterSetName = "SelectedColumnIndex")]
+		[Switch]$SelectedColumnIndex,
+	
 		[Parameter(Mandatory = $true, ParameterSetName = "SelectedRow")]
 		[Switch]$SelectedRow,
 		
@@ -212,11 +211,14 @@ function Get-DataGridViewItem
 		[int]$ColumnNumber,
 		
 		[Parameter(ParameterSetName = "SelectedRow")]
+		[String]$ColumnName,
+		
+		[Parameter(ParameterSetName = "SelectedRow")]
 		[switch]$AllColumns
 	)
 	PROCESS
 	{
-		IF ($PSBoundParameters['CellAddress'])
+		IF ($PSBoundParameters['SelectedCell'])
 		{
 			foreach ($SelectedCell in $datagridview1.SelectedCells)
 			{
@@ -226,14 +228,14 @@ function Get-DataGridViewItem
 				}
 			}
 		}
-		IF ($PSBoundParameters['RowIndex'])
+		IF ($PSBoundParameters['SelectedRowIndex'])
 		{
 			foreach ($SelectedCell in $datagridview1.SelectedCells)
 			{
 				$SelectedCell.RowIndex
 			}
 		}
-		IF ($PSBoundParameters['ColumnIndex'])
+		IF ($PSBoundParameters['SelectedColumnIndex'])
 		{
 			foreach ($SelectedCell in $datagridview1.SelectedCells)
 			{
@@ -242,7 +244,35 @@ function Get-DataGridViewItem
 		}
 		IF ($PSBoundParameters['SelectedRow'])
 		{
-			<#
+			
+			
+			#[System.Windows.Forms.DataGridViewRow]
+			#foreach ($SelectedRow in
+			
+			if (-not ($PSboundparameters['All'])
+			{
+				foreach ($SelectedRow in $datagridview.SelectedRows)
+				{
+					IF ($PSboundparameters['ColumnNumber'])
+					{
+						
+					}
+					IF ($PSboundparameters['ColumnName'])
+					{
+						# Get the Selected row
+						$SelectedRow.indexSelectedRows
+						# Get the value for the $ColumnName of this row
+						$DataGridView[$ColumnName][$d]
+					}
+					ELSE
+					{
+						$SelectedRow.value
+					}
+				}#foreach ($SelectedRow in $datagridview.SelectedCells)
+			}#if (-not ($PSboundparameters['All'])
+			if ($PSboundparameters['All'])
+			{
+				<#
 			$SelectedRowCount = $DataGridView.Rows.GetRowCount('Selected')
 			#$DisplayedRowCount = $DataGridView.Rows.GetRowCount('Displayed')
 			if ($SelectedRowCount -gt 0)
@@ -260,17 +290,9 @@ function Get-DataGridViewItem
 				}
 			}
 			#>
-			
-			#[System.Windows.Forms.DataGridViewRow]
-			#foreach ($SelectedRow in
-			
-			foreach ($SelectedRow in $datagridview.SelectedCells)
-			{
-				$SelectedRow.value
 				
-				#Write-Warning -Message "[PROCESS] This does not work yet"
-			}
-		}
+			}#if ($PSboundparameters['All'])
+		}#IF ($PSBoundParameters['SelectedRow'])
 	}#PROCESS
 }
 
@@ -484,6 +506,8 @@ function Remove-ListBoxItem
 	}
 }
 
+
+
 function Set-DataGridViewColumn
 {
 	PARAM (
@@ -496,6 +520,80 @@ function Set-DataGridViewColumn
 		[int]$NumberOfColumn
 	)
 	$DataGridView.ColumnCount = $NumberOfColumn
+}
+
+<#
+function Set-DataGridView
+{
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true, ParameterSetName = "Main")]
+		[System.Windows.Forms.DataGridView]$DataGridView,
+		[]
+	)
+	PROCESS
+	{
+		[System.Windows.Forms.DataGridViewHeaderBorderStyle]$Style =
+		
+		
+		$ProperFormat = @{
+			SystemFonts.MessageBoxFont.Name = "Segoe UI"
+			DataGridViewHeaderBorderStyle.raised
+		}
+		
+		[System.Windows.Forms.DataGridViewHeaderBorderStyle]$Font.get
+		$DataGridView.ColumnHeadersBorderStyle = $ProperFormat
+		
+	}
+	
+}
+#>
+
+function Set-DataGridViewColor
+{
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true, ParameterSetName = "Main")]
+		[System.Windows.Forms.DataGridView]$DataGridView,
+		
+		[Parameter(ParameterSetName = "Main")]
+		[Parameter(ParameterSetName = "AlternativeRowColor")]
+		[Switch]$AlternativeRowColor,
+		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
+		[System.Drawing.Color]$ForeColor,
+		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
+		[System.Drawing.Color]$BackColor
+	)
+	PROCESS
+	{
+		if ($psboundparameters['AlternativeRowColor'])
+		{
+			$DataGridView.AlternatingRowsDefaultCellStyle.ForeColor = $ForeColor
+			$DataGridView.AlternatingRowsDefaultCellStyle.BAckColor = $BackColor
+		}
+	}
+}
+
+function Set-DataGridViewRowHeader
+{
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.DataGridView]$DataGridView,
+		[Switch]$HideRowHeader,
+		[Switch]$ShowRowHeader
+	)
+	PROCESS
+	{
+		if ($psboundparameters['HideRowHeader'])
+		{
+			$DataGridView.RowHeadersVisible = $false
+		}
+		if ($psboundparameters['ShowRowHeader'])
+		{
+			$DataGridView.RowHeadersVisible = $true
+		}
+	}
 }
 
 
