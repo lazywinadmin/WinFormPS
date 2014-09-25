@@ -4,12 +4,6 @@
 #-------------------------------------------------------------------------
 # Module Name:  WinFormPS
 ##########################################################################
-<#
-Todo:
-	-Set Color in Datagridview (odd or even row, specific row, where value is gt ot lw than)
-	-
-#>
-
 
 # DataGridView
 function Add-DataGridViewColumn
@@ -506,8 +500,6 @@ function Remove-ListBoxItem
 	}
 }
 
-
-
 function Set-DataGridViewColumn
 {
 	PARAM (
@@ -522,56 +514,50 @@ function Set-DataGridViewColumn
 	$DataGridView.ColumnCount = $NumberOfColumn
 }
 
-<#
 function Set-DataGridView
 {
 	PARAM (
 		[ValidateNotNull()]
-		[Parameter(Mandatory = $true, ParameterSetName = "Main")]
-		[System.Windows.Forms.DataGridView]$DataGridView,
-		[]
-	)
-	PROCESS
-	{
-		[System.Windows.Forms.DataGridViewHeaderBorderStyle]$Style =
-		
-		
-		$ProperFormat = @{
-			SystemFonts.MessageBoxFont.Name = "Segoe UI"
-			DataGridViewHeaderBorderStyle.raised
-		}
-		
-		[System.Windows.Forms.DataGridViewHeaderBorderStyle]$Font.get
-		$DataGridView.ColumnHeadersBorderStyle = $ProperFormat
-		
-	}
-	
-}
-#>
-
-function Set-DataGridViewColor
-{
-	PARAM (
-		[ValidateNotNull()]
-		[Parameter(Mandatory = $true, ParameterSetName = "Main")]
+		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
 		
-		[Parameter(ParameterSetName = "Main")]
 		[Parameter(ParameterSetName = "AlternativeRowColor")]
 		[Switch]$AlternativeRowColor,
+		
 		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
 		[System.Drawing.Color]$ForeColor,
+		
 		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
-		[System.Drawing.Color]$BackColor
+		[System.Drawing.Color]$BackColor,
+		
+		[Parameter(ParameterSetName = "Proper")]
+		[Switch]$ProperFormat
 	)
 	PROCESS
 	{
 		if ($psboundparameters['AlternativeRowColor'])
 		{
 			$DataGridView.AlternatingRowsDefaultCellStyle.ForeColor = $ForeColor
-			$DataGridView.AlternatingRowsDefaultCellStyle.BAckColor = $BackColor
+			$DataGridView.AlternatingRowsDefaultCellStyle.BackColor = $BackColor
+		}
+		
+		
+		if ($psboundparameters['ProperFormat'])
+		{
+			#$Font = New-Object -TypeName System.Drawing.Font -ArgumentList "Segoi UI", 10
+			$Font = New-Object -TypeName System.Drawing.Font -ArgumentList "Consolas", 10
+			#[System.Drawing.FontStyle]::Bold
+			
+			$DataGridView.ColumnHeadersBorderStyle = 'Raised'
+			$DataGridView.BorderStyle = 'Fixed3D'
+			$DataGridView.SelectionMode = 'FullRowSelect'
+			$DataGridView.AllowUserToResizeRows = $false
+			$datagridview.DefaultCellStyle.font = $Font
+			
+			#$DataGridView.ColumnHeadersDefaultCellStyle =
 		}
 	}
+	
 }
 
 function Set-DataGridViewRowHeader
@@ -595,6 +581,8 @@ function Set-DataGridViewRowHeader
 		}
 	}
 }
+
+
 
 
 # FROM SAPIEN.com
