@@ -553,8 +553,6 @@ function Set-DataGridView
 			$DataGridView.SelectionMode = 'FullRowSelect'
 			$DataGridView.AllowUserToResizeRows = $false
 			$datagridview.DefaultCellStyle.font = $Font
-			
-			#$DataGridView.ColumnHeadersDefaultCellStyle =
 		}
 	}
 	
