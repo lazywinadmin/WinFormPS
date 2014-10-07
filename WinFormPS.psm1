@@ -243,7 +243,7 @@ function Get-DataGridViewItem
 			#[System.Windows.Forms.DataGridViewRow]
 			#foreach ($SelectedRow in
 			
-			if (-not ($PSboundparameters['All'])
+			if (-not ($PSboundparameters['All']))
 			{
 				foreach ($SelectedRow in $datagridview.SelectedRows)
 				{
