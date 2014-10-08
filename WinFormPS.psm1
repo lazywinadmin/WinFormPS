@@ -158,6 +158,21 @@ function Clear-RichTextBox
 	$RichTextBox.Clear()
 }
 
+function Disable-Button
+{
+	<#
+	.SYNOPSIS
+		This function allows you to disable a button control
+	#>
+	[CmdletBinding()]
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.Button]$Button
+	)
+	$Button.Enabled = $false
+}
+
 function Disable-TabControl
 {
 	PARAM (
@@ -166,6 +181,21 @@ function Disable-TabControl
 		[System.Windows.Forms.TabControl]$TabControl
 	)
 	$TabControl.Enabled = $false
+}
+
+function Enable-Button
+{
+	<#
+	.SYNOPSIS
+		This function allows you to enable a button control
+	#>
+	[CmdletBinding()]
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.Button]$Button
+	)
+	$Button.Enabled = $true
 }
 
 function Enable-TabControl
@@ -502,6 +532,7 @@ function Remove-ListBoxItem
 
 function Set-DataGridViewColumn
 {
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
@@ -516,6 +547,7 @@ function Set-DataGridViewColumn
 
 function Set-DataGridView
 {
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
@@ -560,6 +592,7 @@ function Set-DataGridView
 
 function Set-DataGridViewRowHeader
 {
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
@@ -579,9 +612,6 @@ function Set-DataGridViewRowHeader
 		}
 	}
 }
-
-
-
 
 # FROM SAPIEN.com
 function Sort-ListViewColumn
