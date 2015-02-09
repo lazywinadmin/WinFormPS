@@ -11,6 +11,16 @@ function Add-DataGridViewColumn
 <#
 .SYNOPSIS
 	This function add a column to a DataGridView
+.DESCRIPTION
+	This function add a column to a DataGridView
+.EXAMPLE
+	Add-DataGridViewColumn -DataGridView $datagridview1 -ColumnName $($textbox1.Text -split "," -replace '^\s+', '' -replace '\s+$', '')
+.EXAMPLE
+	Add-DataGridViewColumn -DataGridView $datagridview1 -ColumnName "First Name","Last Name","SamAccountName","Description"
+.NOTES
+	Francois-Xavier Cat
+	www.lazywinadmin.com
+	@lazywinadm
 #>
 	PARAM (
 		[ValidateNotNull()]
@@ -21,24 +31,43 @@ function Add-DataGridViewColumn
 	
 	foreach ($Column in $ColumnName)
 	{
+		
+		# Create Column object
+		$NewColumn = New-Object -TypeName System.Windows.Forms.DataGridViewTextBoxColumn
+		$NewColumn.Name = $Column
+		$NewColumn.HeaderText = $Column
+		
 		# Add the Column to the Datagridview
-		$DataGridView.Columns.Add($Column, $Column) #ColumnName and ColumnHeader are specified
+		$DataGridView.Columns.Add($NewColumn)
 	}
-}
+}#Add-DataGridViewColumn
 
 function Add-DataGridViewRow
 {
+<#
+.SYNOPSIS
+	This function add a row to a DataGridView
+.DESCRIPTION
+	This function add a row to a DataGridView
+.EXAMPLE
+	Add-DataGridViewRow -DataGridView $datagridview1 -Values ($textbox1.Text -split ",")
+.EXAMPLE
+	Add-DataGridViewRow -DataGridView $datagridview1 -Values "Francois-Xavier","Cat","fxcat"
+.NOTES
+	Francois-Xavier Cat
+	www.lazywinadmin.com
+	@lazywinadm
+#>
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
 		[Array]$Values
 	)
-	
-	#foreach ($item in $Values){
 	# Add a row
 	$DataGridView.Rows.Add($Values)
-}
+}#Function Add-DataGridViewRow
+
 
 function Append-Richtextbox
 {
