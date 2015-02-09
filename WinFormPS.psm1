@@ -729,9 +729,10 @@ function ConvertTo-DataTable
 			$Table.Rows.Clear()
 		}
 		
-		#ROWS
+		#Rows Work
 		foreach ($item in $InputObject)
 		{
+			# Create a new row object
 			$row = $table.NewRow()
 			
 			if ($item)
