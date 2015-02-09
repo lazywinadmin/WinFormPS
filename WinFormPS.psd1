@@ -1,15 +1,4 @@
-﻿##########################################################################
-# Created with: SAPIEN Technologies, Inc., PowerShell Studio 2014 v4.1.65
-# Created on:   2014-09-06 7:10 PM
-# Created by:   Francois-Xavier Cat
-# Organization: LazyWinAdmin.com
-#-------------------------------------------------------------------------
-# Module Manifest
-#-------------------------------------------------------------------------
-# Module Name:  WinFormPS
-##########################################################################
-
-@{
+﻿@{
 
 # Script module or binary module file associated with this manifest
 ModuleToProcess = 'WinFormPS.psm1'
@@ -27,10 +16,10 @@ Author = 'Francois-Xavier Cat'
 CompanyName = 'LazyWinAdmin.com'
 
 # Copyright statement for this module
-Copyright = '(c) 2014. All rights reserved.'
+Copyright = '(c) 2015. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Module description'
+Description = 'WinFormPS is a module to manage WinForms controls using PowerShell functions'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '2.0'
