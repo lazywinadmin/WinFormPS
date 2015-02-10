@@ -68,7 +68,6 @@ function Add-DataGridViewRow
 	$DataGridView.Rows.Add($Values)
 }#Function Add-DataGridViewRow
 
-
 function Append-Richtextbox
 {
 	<#
@@ -162,21 +161,40 @@ function Append-Richtextbox
 		# Scroll to the end of the RichTextBox
 		$RichTextBox.ScrollToCaret()
 	}
-}
+}#Append-Richtextbox
 
 function Clear-ListBox
 {
+<#
+.SYNOPSIS
+	This function will clear the content of a listbox control
+.EXAMPLE
+	Clear-ListBox -ListBox $ListBox
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.ListBox]$ListBox)
 	
-	#Clear the ListBox
 	$ListBox.Items.Clear()
-}
+}#Clear-ListBox
 
 function Clear-RichTextBox
 {
+<#
+.SYNOPSIS
+	This function will clear the content of a richtextbox control
+.EXAMPLE
+	Clear-RichTextBox -RichTextBox $RichTextBox
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory)]
@@ -189,10 +207,16 @@ function Clear-RichTextBox
 
 function Disable-Button
 {
-	<#
-	.SYNOPSIS
-		This function allows you to disable a button control
-	#>
+<#
+.SYNOPSIS
+	This function will disable a button control
+.EXAMPLE
+	Disable-Button -Button $Button
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
 	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
@@ -204,6 +228,16 @@ function Disable-Button
 
 function Disable-TabControl
 {
+<#
+.SYNOPSIS
+	This function will disable a tab control
+.EXAMPLE
+	Disable-TabControl -TabControl $TabControl
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
@@ -214,10 +248,16 @@ function Disable-TabControl
 
 function Enable-Button
 {
-	<#
-	.SYNOPSIS
-		This function allows you to enable a button control
-	#>
+<#
+.SYNOPSIS
+	This function will enable a button control
+.EXAMPLE
+	Enable-Button -Button $Button
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
 	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
@@ -229,140 +269,22 @@ function Enable-Button
 
 function Enable-TabControl
 {
+<#
+.SYNOPSIS
+	This function will enable a tab control
+.EXAMPLE
+	Enable-TabControl -TabControl $TabControl
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.TabControl]$TabControl
 	)
 	$TabControl.Enabled = $true
-}
-
-function Get-DataGridViewItem
-{
-	<#
-		Add Count
-		Coordinate of the item (ROW index/Columnindex).value
-	#>
-	[CmdletBinding(DefaultParameterSetName = "CellAddress")]
-	PARAM (
-		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.DataGridView]$DataGridView,
-		
-		[Parameter(Mandatory = $true,ParameterSetName = "SelectedCell")]
-		[Switch]$SelectedCell,
-		
-		[Parameter(Mandatory = $true, ParameterSetName = "SelectedRowIndex")]
-		[Switch]$SelectedRowIndex,
-		
-		[Parameter(Mandatory = $true, ParameterSetName = "SelectedColumnIndex")]
-		[Switch]$SelectedColumnIndex,
-	
-		[Parameter(Mandatory = $true, ParameterSetName = "SelectedRow")]
-		[Switch]$SelectedRow,
-		
-		[Parameter(ParameterSetName = "SelectedRow")]
-		[int]$ColumnNumber,
-		
-		[Parameter(ParameterSetName = "SelectedRow")]
-		[String]$ColumnName,
-		
-		[Parameter(ParameterSetName = "SelectedRow")]
-		[switch]$AllColumns
-	)
-	PROCESS
-	{
-		IF ($PSBoundParameters['SelectedCell'])
-		{
-			foreach ($SelectedCell in $datagridview1.SelectedCells)
-			{
-				New-Object -TypeName PSObject -Property @{
-					RowIndex = $SelectedCell.RowIndex
-					ColumnIndex = $SelectedCell.ColumnIndex
-				}
-			}
-		}
-		IF ($PSBoundParameters['SelectedRowIndex'])
-		{
-			foreach ($SelectedCell in $datagridview1.SelectedCells)
-			{
-				$SelectedCell.RowIndex
-			}
-		}
-		IF ($PSBoundParameters['SelectedColumnIndex'])
-		{
-			foreach ($SelectedCell in $datagridview1.SelectedCells)
-			{
-				$SelectedCell.ColumnIndex
-			}
-		}
-		IF ($PSBoundParameters['SelectedRow'])
-		{
-			
-			
-			#[System.Windows.Forms.DataGridViewRow]
-			#foreach ($SelectedRow in
-			
-			if (-not ($PSboundparameters['All']))
-			{
-				foreach ($SelectedRow in $datagridview.SelectedRows)
-				{
-					IF ($PSboundparameters['ColumnNumber'])
-					{
-						
-					}
-					IF ($PSboundparameters['ColumnName'])
-					{
-						# Get the Selected row
-						$SelectedRow.indexSelectedRows
-						# Get the value for the $ColumnName of this row
-						$DataGridView[$ColumnName][$d]
-					}
-					ELSE
-					{
-						$SelectedRow.value
-					}
-				}#foreach ($SelectedRow in $datagridview.SelectedCells)
-			}#if (-not ($PSboundparameters['All'])
-			if ($PSboundparameters['All'])
-			{
-				<#
-			$SelectedRowCount = $DataGridView.Rows.GetRowCount('Selected')
-			#$DisplayedRowCount = $DataGridView.Rows.GetRowCount('Displayed')
-			if ($SelectedRowCount -gt 0)
-			{
-				IF ($PSboundparameters['ColumnNumber'])
-				{
-					for ([int]$i = 0, $i -gt $SelectedRowCount; $i++) { }
-					$SelectedRow
-					$datagridview1
-					
-				}
-				if (-not ($PSboundparameters['ColumnNumber']) -and -not ($psboundparameter['AllColumns']))
-				{
-					$datagridview.SelectedRows[]
-				}
-			}
-			#>
-				
-			}#if ($PSboundparameters['All'])
-		}#IF ($PSBoundParameters['SelectedRow'])
-	}#PROCESS
-}
-
-function Get-DataGridViewItemCount
-{
-	PARAM (
-		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.DataGridView]$DataGridView,
-	
-		[Parameter(Mandatory = $true)]
-		[ValidateSet("Displayed", "Frozen","None","ReadOnly","Resizable", "ResizableSet", "Selected", "Visible")]
-		[System.Windows.Forms.DataGridViewElementStates]$Type
-	)
-	PROCESS
-	{
-		$SelectedRowCount = $DataGridView.Rows.GetRowCount($Type)
-	}
 }
 
 function Get-ListBoxItem
@@ -385,43 +307,26 @@ function Get-ListBoxItem
 	#Requires -Version 3
 	PARAM (
 		[ValidateNotNull()]
-		[Parameter(
-				   ParameterSetName = "All",
-				   Mandatory)]
-		[Parameter(
-				   ParameterSetName = "Selected",
-				   Mandatory)]
+		[Parameter(ParameterSetName = "All")]
+		[Parameter(ParameterSetName = "Selected")]
 		[System.Windows.Forms.ListBox]$ListBox,
-		[Parameter(
-				   ParameterSetName = "All",
-				   Mandatory)]
-		[Parameter(
-				   ParameterSetName = "Selected")]
-		[switch]$ShowCount,
 		
-		[Parameter(
-				   ParameterSetName = "Selected",
-				   Mandatory)]
+		[Parameter(ParameterSetName = "Selected")]
 		[switch]$SelectedItem,
-		[Parameter(
-				   ParameterSetName = "All",
-				   Mandatory)]
+		
+		[Parameter(ParameterSetName = "All")]
 		[switch]$All
 	)
 	
-	IF ($All)
+	#All
+	IF ($PSBoundParameters['All'])
 	{
-		IF ($ShowCount)
-		{
-			$ListBox.Items.Count
-		}
-		ELSE { $ListBox.Items }
+		$ListBox.Items
 	}
 	
-	IF ($SelectedItem)
+	IF ($PSBoundParameters['SelectedItem'])
 	{
-		IF ($ShowCount) { $ListBox.SelectedItems.Count }
-		ELSE { $ListBox.SelectedItems }
+		$ListBox.SelectedItems
 	}
 }
 
@@ -450,9 +355,6 @@ function Get-ListViewItem
 		[Parameter(ParameterSetName = "Selected",
 				   Mandatory)]
 		[System.Windows.Forms.ListView]$ListView,
-		[Parameter(ParameterSetName = "All")]
-		[Parameter(ParameterSetName = "Selected")]
-		[switch]$ShowCount,
 		
 		[Parameter(ParameterSetName = "Selected",
 				   Mandatory)]
@@ -462,20 +364,8 @@ function Get-ListViewItem
 		[switch]$All
 	)
 	
-	IF ($All)
-	{
-		IF ($ShowCount)
-		{
-			$ListView.Items.Count
-		}
-		ELSE { $ListView.Items }
-	}
-	
-	IF ($SelectedItem)
-	{
-		IF ($ShowCount) { $ListView.SelectedItems.Count }
-		ELSE { $ListView.SelectedItems }
-	}
+	IF ($PSBoundParameters['All']) { $ListView.Items }
+	IF ($PSBoundParameters['SelectedItem']) { $ListView.SelectedItems }
 }
 
 function Remove-ListBoxItem
@@ -642,6 +532,128 @@ function Set-DataGridViewRowHeader
 	}
 }
 
+
+# FROM SAPIEN.com
+<#.NOTES
+	SAPIEN Technologies, Inc.
+	http://www.sapien.com
+#>
+
+function Add-ListViewItem
+{
+<#
+	.SYNOPSIS
+		Adds the item(s) to the ListView and stores the object in the ListViewItem's Tag property.
+
+	.DESCRIPTION
+		Adds the item(s) to the ListView and stores the object in the ListViewItem's Tag property.
+
+	.PARAMETER ListView
+		The ListView control to add the items to.
+
+	.PARAMETER Items
+		The object or objects you wish to load into the ListView's Items collection.
+		
+	.PARAMETER  ImageIndex
+		The index of a predefined image in the ListView's ImageList.
+	
+	.PARAMETER  SubItems
+		List of strings to add as Subitems.
+	
+	.PARAMETER Group
+		The group to place the item(s) in.
+	
+	.PARAMETER Clear
+		This switch clears the ListView's Items before adding the new item(s).
+	
+	.EXAMPLE
+		Add-ListViewItem -ListView $listview1 -Items "Test" -Group $listview1.Groups[0] -ImageIndex 0 -SubItems "Installed"
+	
+	.NOTES
+		SAPIEN Technologies, Inc.
+		http://www.sapien.com/
+#>
+	
+	Param (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.ListView]$ListView,
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		$Items,
+		[int]$ImageIndex = -1,
+		[string[]]$SubItems,
+		$Group,
+		[switch]$Clear)
+	
+	if ($Clear)
+	{
+		$ListView.Items.Clear();
+	}
+	
+	$lvGroup = $null
+	if ($Group -is [System.Windows.Forms.ListViewGroup])
+	{
+		$lvGroup = $Group
+	}
+	elseif ($Group -is [string])
+	{
+		#$lvGroup = $ListView.Group[$Group] # Case sensitive
+		foreach ($groupItem in $ListView.Groups)
+		{
+			if ($groupItem.Name -eq $Group)
+			{
+				$lvGroup = $groupItem
+				break
+			}
+		}
+		
+		if ($lvGroup -eq $null)
+		{
+			$lvGroup = $ListView.Groups.Add($Group, $Group)
+		}
+	}
+	
+	if ($Items -is [Array])
+	{
+		$ListView.BeginUpdate()
+		foreach ($item in $Items)
+		{
+			$listitem = $ListView.Items.Add($item.ToString(), $ImageIndex)
+			#Store the object in the Tag
+			$listitem.Tag = $item
+			
+			if ($SubItems -ne $null)
+			{
+				$listitem.SubItems.AddRange($SubItems)
+			}
+			
+			if ($lvGroup -ne $null)
+			{
+				$listitem.Group = $lvGroup
+			}
+		}
+		$ListView.EndUpdate()
+	}
+	else
+	{
+		#Add a new item to the ListView
+		$listitem = $ListView.Items.Add($Items.ToString(), $ImageIndex)
+		#Store the object in the Tag
+		$listitem.Tag = $Items
+		
+		if ($SubItems -ne $null)
+		{
+			$listitem.SubItems.AddRange($SubItems)
+		}
+		
+		if ($lvGroup -ne $null)
+		{
+			$listitem.Group = $lvGroup
+		}
+	}
+}
+
 function ConvertTo-DataTable
 {
 	<#
@@ -667,6 +679,9 @@ function ConvertTo-DataTable
 			$DataTable = ConvertTo-DataTable -InputObject (Get-Process)
 	
 		.NOTES
+			SAPIEN Technologies, Inc.
+			http://www.sapien.com/
+	
 			VERSION HISTORY
 			1.0 ????/??/?? From Sapien.com Version
 			2.0 2014/12/03 Francois-Xavier Cat - In the rows workk, I added a 
@@ -781,222 +796,6 @@ function ConvertTo-DataTable
 	}
 	
 	return @(, $Table)
-}
-
-
-# FROM SAPIEN.com
-function Sort-ListViewColumn
-{
-	<#
-	.SYNOPSIS
-		Sort the ListView's item using the specified column.
-
-	.DESCRIPTION
-		Sort the ListView's item using the specified column.
-		This function uses Add-Type to define a class that sort the items.
-		The ListView's Tag property is used to keep track of the sorting.
-
-	.PARAMETER ListView
-		The ListView control to sort.
-
-	.PARAMETER ColumnIndex
-		The index of the column to use for sorting.
-		
-	.PARAMETER  SortOrder
-		The direction to sort the items. If not specified or set to None, it will toggle.
-	
-	.EXAMPLE
-		Sort-ListViewColumn -ListView $listview1 -ColumnIndex 0
-		
-	.NOTES
-		SAPIEN Technologies, Inc.
-		http://www.sapien.com/
-		
-#>
-	param (
-		[ValidateNotNull()]
-		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.ListView]$ListView,
-		[Parameter(Mandatory = $true)]
-		[int]$ColumnIndex,
-		[System.Windows.Forms.SortOrder]$SortOrder = 'None')
-	
-	if (($ListView.Items.Count -eq 0) -or ($ColumnIndex -lt 0) -or ($ColumnIndex -ge $ListView.Columns.Count))
-	{
-		return;
-	}
-	
-	#region Define ListViewItemComparer
-	try
-	{
-		$local:type = [ListViewItemComparer]
-	}
-	catch
-	{
-		Add-Type -ReferencedAssemblies ('System.Windows.Forms') -TypeDefinition  @" 
-	using System;
-	using System.Windows.Forms;
-	using System.Collections;
-	public class ListViewItemComparer : IComparer
-	{
-	    public int column;
-	    public SortOrder sortOrder;
-	    public ListViewItemComparer()
-	    {
-	        column = 0;
-			sortOrder = SortOrder.Ascending;
-	    }
-	    public ListViewItemComparer(int column, SortOrder sort)
-	    {
-	        this.column = column;
-			sortOrder = sort;
-	    }
-	    public int Compare(object x, object y)
-	    {
-			if(column >= ((ListViewItem)x).SubItems.Count)
-				return  sortOrder == SortOrder.Ascending ? -1 : 1;
-		
-			if(column >= ((ListViewItem)y).SubItems.Count)
-				return sortOrder == SortOrder.Ascending ? 1 : -1;
-		
-			if(sortOrder == SortOrder.Ascending)
-	        	return String.Compare(((ListViewItem)x).SubItems[column].Text, ((ListViewItem)y).SubItems[column].Text);
-			else
-				return String.Compare(((ListViewItem)y).SubItems[column].Text, ((ListViewItem)x).SubItems[column].Text);
-	    }
-	}
-"@ | Out-Null
-	}
-	#endregion
-	
-	if ($ListView.Tag -is [ListViewItemComparer])
-	{
-		#Toggle the Sort Order
-		if ($SortOrder -eq [System.Windows.Forms.SortOrder]::None)
-		{
-			if ($ListView.Tag.column -eq $ColumnIndex -and $ListView.Tag.sortOrder -eq 'Ascending')
-			{
-				$ListView.Tag.sortOrder = 'Descending'
-			}
-			else
-			{
-				$ListView.Tag.sortOrder = 'Ascending'
-			}
-		}
-		else
-		{
-			$ListView.Tag.sortOrder = $SortOrder
-		}
-		
-		$ListView.Tag.column = $ColumnIndex
-		$ListView.Sort()#Sort the items
-	}
-	else
-	{
-		if ($Sort -eq [System.Windows.Forms.SortOrder]::None)
-		{
-			$Sort = [System.Windows.Forms.SortOrder]::Ascending
-		}
-		
-		#Set to Tag because for some reason in PowerShell ListViewItemSorter prop returns null
-		$ListView.Tag = New-Object ListViewItemComparer ($ColumnIndex, $SortOrder)
-		$ListView.ListViewItemSorter = $ListView.Tag #Automatically sorts
-	}
-}
-
-function Add-ListViewItem
-{
-<#
-	.SYNOPSIS
-		Adds the item(s) to the ListView and stores the object in the ListViewItem's Tag property.
-
-	.DESCRIPTION
-		Adds the item(s) to the ListView and stores the object in the ListViewItem's Tag property.
-
-	.PARAMETER ListView
-		The ListView control to add the items to.
-
-	.PARAMETER Items
-		The object or objects you wish to load into the ListView's Items collection.
-		
-	.PARAMETER  ImageIndex
-		The index of a predefined image in the ListView's ImageList.
-	
-	.PARAMETER  SubItems
-		List of strings to add as Subitems.
-	
-	.PARAMETER Group
-		The group to place the item(s) in.
-	
-	.PARAMETER Clear
-		This switch clears the ListView's Items before adding the new item(s).
-	
-	.EXAMPLE
-		Add-ListViewItem -ListView $listview1 -Items "Test" -Group $listview1.Groups[0] -ImageIndex 0 -SubItems "Installed"
-	
-	.EXAMPLE		
-		Add-ListViewItem -ListView $listview1 -Items $Output.SamAccountName -SubItems $Output.isLockedOut, $Output.Description, $Output.DN
-		
-	.NOTES
-		SAPIEN Technologies, Inc.
-		http://www.sapien.com/
-#>
-	
-	Param (
-		[ValidateNotNull()]
-		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.ListView]$ListView,
-		[ValidateNotNull()]
-		[Parameter(Mandatory = $true)]
-		$Items,
-		[int]$ImageIndex = -1,
-		[string[]]$SubItems,
-		[System.Windows.Forms.ListViewGroup]$Group,
-		[switch]$Clear)
-	
-	if ($Clear)
-	{
-		$ListView.Items.Clear();
-	}
-	
-	if ($Items -is [Array])
-	{
-		$ListView.BeginUpdate()
-		foreach ($item in $Items)
-		{
-			$listitem = $ListView.Items.Add($item.ToString(), $ImageIndex)
-			#Store the object in the Tag
-			$listitem.Tag = $item
-			
-			if ($SubItems -ne $null)
-			{
-				$listitem.SubItems.AddRange($SubItems)
-			}
-			
-			if ($Group -ne $null)
-			{
-				$listitem.Group = $Group
-			}
-		}
-		$ListView.EndUpdate()
-	}
-	else
-	{
-		#Add a new item to the ListView
-		$listitem = $ListView.Items.Add($Items.ToString(), $ImageIndex)
-		#Store the object in the Tag
-		$listitem.Tag = $Items
-		
-		if ($SubItems -ne $null)
-		{
-			$listitem.SubItems.AddRange($SubItems)
-		}
-		
-		if ($Group -ne $null)
-		{
-			$listitem.Group = $Group
-		}
-	}
 }
 
 function Load-DataGridView
@@ -1130,6 +929,124 @@ function Load-ListBox
 	}
 	
 	$listBox.DisplayMember = $DisplayMember
+}
+
+function Sort-ListViewColumn
+{
+	<#
+	.SYNOPSIS
+		Sort the ListView's item using the specified column.
+
+	.DESCRIPTION
+		Sort the ListView's item using the specified column.
+		This function uses Add-Type to define a class that sort the items.
+		The ListView's Tag property is used to keep track of the sorting.
+
+	.PARAMETER ListView
+		The ListView control to sort.
+
+	.PARAMETER ColumnIndex
+		The index of the column to use for sorting.
+		
+	.PARAMETER  SortOrder
+		The direction to sort the items. If not specified or set to None, it will toggle.
+	
+	.EXAMPLE
+		Sort-ListViewColumn -ListView $listview1 -ColumnIndex 0
+	
+	.NOTES
+		SAPIEN Technologies, Inc.
+		http://www.sapien.com/
+#>
+	param (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.ListView]$ListView,
+		[Parameter(Mandatory = $true)]
+		[int]$ColumnIndex,
+		[System.Windows.Forms.SortOrder]$SortOrder = 'None')
+	
+	if (($ListView.Items.Count -eq 0) -or ($ColumnIndex -lt 0) -or ($ColumnIndex -ge $ListView.Columns.Count))
+	{
+		return;
+	}
+	
+	#region Define ListViewItemComparer
+	try
+	{
+		$local:type = [ListViewItemComparer]
+	}
+	catch
+	{
+		Add-Type -ReferencedAssemblies ('System.Windows.Forms') -TypeDefinition  @" 
+	using System;
+	using System.Windows.Forms;
+	using System.Collections;
+	public class ListViewItemComparer : IComparer
+	{
+	    public int column;
+	    public SortOrder sortOrder;
+	    public ListViewItemComparer()
+	    {
+	        column = 0;
+			sortOrder = SortOrder.Ascending;
+	    }
+	    public ListViewItemComparer(int column, SortOrder sort)
+	    {
+	        this.column = column;
+			sortOrder = sort;
+	    }
+	    public int Compare(object x, object y)
+	    {
+			if(column >= ((ListViewItem)x).SubItems.Count)
+				return  sortOrder == SortOrder.Ascending ? -1 : 1;
+		
+			if(column >= ((ListViewItem)y).SubItems.Count)
+				return sortOrder == SortOrder.Ascending ? 1 : -1;
+		
+			if(sortOrder == SortOrder.Ascending)
+	        	return String.Compare(((ListViewItem)x).SubItems[column].Text, ((ListViewItem)y).SubItems[column].Text);
+			else
+				return String.Compare(((ListViewItem)y).SubItems[column].Text, ((ListViewItem)x).SubItems[column].Text);
+	    }
+	}
+"@ | Out-Null
+	}
+	#endregion
+	
+	if ($ListView.Tag -is [ListViewItemComparer])
+	{
+		#Toggle the Sort Order
+		if ($SortOrder -eq [System.Windows.Forms.SortOrder]::None)
+		{
+			if ($ListView.Tag.column -eq $ColumnIndex -and $ListView.Tag.sortOrder -eq 'Ascending')
+			{
+				$ListView.Tag.sortOrder = 'Descending'
+			}
+			else
+			{
+				$ListView.Tag.sortOrder = 'Ascending'
+			}
+		}
+		else
+		{
+			$ListView.Tag.sortOrder = $SortOrder
+		}
+		
+		$ListView.Tag.column = $ColumnIndex
+		$ListView.Sort()#Sort the items
+	}
+	else
+	{
+		if ($SortOrder -eq [System.Windows.Forms.SortOrder]::None)
+		{
+			$SortOrder = [System.Windows.Forms.SortOrder]::Ascending
+		}
+		
+		#Set to Tag because for some reason in PowerShell ListViewItemSorter prop returns null
+		$ListView.Tag = New-Object ListViewItemComparer ($ColumnIndex, $SortOrder)
+		$ListView.ListViewItemSorter = $ListView.Tag #Automatically sorts
+	}
 }
 
 Export-ModuleMember -Function *
