@@ -408,13 +408,13 @@ function Remove-ListBoxItem
 	}
 	PROCESS
 	{
-		IF ($All)
+		IF ($PSBoundParameters['All'])
 		{
 			Write-Verbose -Message "PROCESS - ListBox - Clear all item(s)"
 			$ListBox.Items.Clear()
 		}
 		
-		IF ($Pattern)
+		IF ($PSBoundParameters['Pattern'])
 		{
 			Write-Verbose -Message "PROCESS - ListBox - Clear item(s) with specific pattern"
 			foreach ($item in $ListBox.Items)
@@ -429,7 +429,7 @@ function Remove-ListBoxItem
 				}
 			}
 		}
-		IF ($SelectedItems)
+		IF ($PSBoundParameters['SelectedItems'])
 		{
 			while ($ListBox.SelectedItems -gt 0)
 			{
@@ -449,30 +449,40 @@ function Remove-ListBoxItem
 	}
 }
 
-function Set-DataGridViewColumn
-{
-	[CmdletBinding()]
-	PARAM (
-		[ValidateNotNull()]
-		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.DataGridView]$DataGridView,
-		
-		[ValidateRange(1, 65535)]
-		[Parameter(Mandatory = $true)]
-		[int]$NumberOfColumn
-	)
-	$DataGridView.ColumnCount = $NumberOfColumn
-}
-
 function Set-DataGridView
 {
+	<#
+		.SYNOPSIS
+			This function helps you edit the datagridview control
+	
+		.DESCRIPTION
+			This function helps you edit the datagridview control
+	
+		.EXAMPLE
+			Set-DataGridView -DataGridView $datagridview1 -ProperFormat -FontFamily $listboxFontFamily.Text -FontSize $listboxFontSize.Text
+	
+		.EXAMPLE
+			Set-DataGridView -DataGridView $datagridview1 -AlternativeRowColor -BackColor 'AliceBlue' -ForeColor 'Black'
+	
+		.EXAMPLE
+			Set-DataGridViewRowHeader -DataGridView $datagridview1 -HideRowHeader
+	
+		.EXAMPLE
+			Set-DataGridViewRowHeader -DataGridView $datagridview1 -ShowRowHeader
+	
+		.NOTES
+			Author: Francois-Xavier Cat
+			Twitter:@LazyWinAdm
+			WWW: 	lazywinadmin.com
+	#>
+	
 	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
 		
-		[Parameter(ParameterSetName = "AlternativeRowColor")]
+		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
 		[Switch]$AlternativeRowColor,
 		
 		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
@@ -481,8 +491,20 @@ function Set-DataGridView
 		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
 		[System.Drawing.Color]$BackColor,
 		
+		[Parameter(Mandatory = $true, ParameterSetName = "Proper")]
+		[Switch]$ProperFormat,
+		
 		[Parameter(ParameterSetName = "Proper")]
-		[Switch]$ProperFormat
+		[String]$FontFamily = "Consolas",
+		
+		[Parameter(ParameterSetName = "Proper")]
+		[Int]$FontSize = 10,
+		
+		[Parameter(ParameterSetName = "HideRowHeader")]
+		[Switch]$HideRowHeader,
+		[Parameter(ParameterSetName = "ShowRowHeader")]
+		[Switch]$ShowRowHeader
+		
 	)
 	PROCESS
 	{
@@ -496,7 +518,8 @@ function Set-DataGridView
 		if ($psboundparameters['ProperFormat'])
 		{
 			#$Font = New-Object -TypeName System.Drawing.Font -ArgumentList "Segoi UI", 10
-			$Font = New-Object -TypeName System.Drawing.Font -ArgumentList "Consolas", 10
+			$Font = New-Object -TypeName System.Drawing.Font -ArgumentList $FontFamily, $FontSize
+			
 			#[System.Drawing.FontStyle]::Bold
 			
 			$DataGridView.ColumnHeadersBorderStyle = 'Raised'
@@ -505,22 +528,7 @@ function Set-DataGridView
 			$DataGridView.AllowUserToResizeRows = $false
 			$datagridview.DefaultCellStyle.font = $Font
 		}
-	}
-	
-}
-
-function Set-DataGridViewRowHeader
-{
-	[CmdletBinding()]
-	PARAM (
-		[ValidateNotNull()]
-		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.DataGridView]$DataGridView,
-		[Switch]$HideRowHeader,
-		[Switch]$ShowRowHeader
-	)
-	PROCESS
-	{
+		
 		if ($psboundparameters['HideRowHeader'])
 		{
 			$DataGridView.RowHeadersVisible = $false
@@ -530,6 +538,7 @@ function Set-DataGridViewRowHeader
 			$DataGridView.RowHeadersVisible = $true
 		}
 	}
+	
 }
 
 
