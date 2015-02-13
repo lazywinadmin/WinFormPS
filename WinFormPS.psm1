@@ -80,15 +80,15 @@ function Append-Richtextbox
 		.PARAMETER Message
 			Specify the Message to show
 		.PARAMETER MessageColor
-			Specify the Color to use for the Message
+			Specify the Color to use for the Message. Default is DarkGreen.
 		.PARAMETER Source
 			Specify the Source type of the Message
 		.PARAMETER SourceColor
-			Specify the Source type color to use
-		.PARAMETER ComputerName
-			Specify the ComputerName on which the message apply (nothing is done on a remote computer, it's just an informational parameter)
-		.PARAMETER ComputerNameColor
-			Specify the ComputerName color to use
+			Specify the Source type color to use. Default is Gray.
+		.PARAMETER ItemName
+			Specify a name that will help the user to identify the item
+		.PARAMETER ItemColor
+			Specify a color for the ItemName. Default is Blue.
 		.EXAMPLE
 			Append-Richtextbox -RichTextBox $RichTextBox1 -Message "Hello World"
 		.EXAMPLE
@@ -100,24 +100,29 @@ function Append-Richtextbox
 	
 			VERSION HISTORY
 				1.0 2014/04/16 Initial Version
+				2.0 2015/02/13 Small update of parameter/Comment Based help
 	#>
 	[CmdletBinding()]
 	PARAM (
-		[ValidateNotNull()]
-		[Parameter(Mandatory)]
+		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.Richtextbox]$RichTextBox,
-		[Parameter(Mandatory)]
+		
+		[Parameter(Mandatory = $true)]
 		[string]$Message,
 		[string]$MessageColor = "DarkGreen",
 		[string]$DateTimeColor = "Black",
 		[string]$Source,
 		[string]$SourceColor = "Gray",
-		[string]$ComputerName,
-		[String]$ComputerNameColor = "Blue")
+		
+		[Alias("ComputerName", "UserName")]
+		[string]$ItemName,
+		
+		[Alias("ComputerNameColor", "UserNameColor")]
+		[String]$ItemColor = "Blue")
 	
 	BEGIN
 	{
-		# Get current date/time
+		# Get current date/time. Example: 2015-12-20 18:25:03
 		$SortableTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 	}
 	PROCESS
@@ -129,11 +134,11 @@ function Append-Richtextbox
 			$RichTextBox.AppendText("[$SortableTime] ")
 			
 			
-			IF ($PSBoundParameters['ComputerName'])
+			IF ($PSBoundParameters['ItemName'])
 			{
 				# Add ComputerName
-				$RichTextBox.SelectionColor = $ComputerNameColor
-				$RichTextBox.AppendText(("$ComputerName ").ToUpper())
+				$RichTextBox.SelectionColor = $ItemColor
+				$RichTextBox.AppendText(("$Item ").ToUpper())
 			}
 			
 			IF ($PSBoundParameters['Source'])
@@ -151,6 +156,7 @@ function Append-Richtextbox
 		CATCH
 		{
 			Write-Error -Message "PROCESS - Error while writing inside the RichTextBox"
+			Write-Error -Message "PROCESS - $($Error[0].Exception.message)"
 		}
 	}
 	END
@@ -203,7 +209,7 @@ function Clear-RichTextBox
 	
 	#Clear the RichTextBox
 	$RichTextBox.Clear()
-}
+}#Clear-RichTextBox
 
 function Disable-Button
 {
@@ -224,7 +230,27 @@ function Disable-Button
 		[System.Windows.Forms.Button]$Button
 	)
 	$Button.Enabled = $false
-}
+}#Disable-Button
+
+function Disable-RichTextBox
+{
+<#
+.SYNOPSIS
+	This function will disable a RichTextBox control
+.EXAMPLE
+	Disable-RichTextBox -RichTextBox $RichTextBox
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.RichTextBox]$RichTextBox
+	)
+	$RichTextBox.Enabled = $false
+}#Disable-RichTextBox
 
 function Disable-TabControl
 {
@@ -244,7 +270,7 @@ function Disable-TabControl
 		[System.Windows.Forms.TabControl]$TabControl
 	)
 	$TabControl.Enabled = $false
-}
+}#Disable-TabControl
 
 function Enable-Button
 {
@@ -265,7 +291,27 @@ function Enable-Button
 		[System.Windows.Forms.Button]$Button
 	)
 	$Button.Enabled = $true
-}
+}#Enable-Button
+
+function Enable-RichTextBox
+{
+<#
+.SYNOPSIS
+	This function will enable a RichTextBox control
+.EXAMPLE
+	Enable-RichTextBox -RichTextBox $RichTextBox
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.RichTextBox]$RichTextBox
+	)
+	$RichTextBox.Enabled = $true
+}#Enable-RichTextBox
 
 function Enable-TabControl
 {
@@ -285,7 +331,35 @@ function Enable-TabControl
 		[System.Windows.Forms.TabControl]$TabControl
 	)
 	$TabControl.Enabled = $true
-}
+}#Enable-TabControl
+
+function Get-Form
+{
+	[CmdletBinding()]
+	PARAM (
+		[System.Windows.Forms.Form]$Form,
+		[Switch]$Controls,
+		[Switch]$TabIndex,
+	[Alias('Title')]	
+	[Switch]$Text
+	)
+	PROCESS
+	{
+		IF ($PSBoundParameters["Controls"])
+		{
+			$Form.Controls
+		}
+		IF ($PSBoundParameters["TabIndex"])
+		{
+			$Form.TabIndex
+		}
+		IF ($PSBoundParameters["Text"])
+		{
+			$Form.Text
+		}
+	}#PROCESS
+	
+}#Set-Form
 
 function Get-ListBoxItem
 {
@@ -328,7 +402,7 @@ function Get-ListBoxItem
 	{
 		$ListBox.SelectedItems
 	}
-}
+}#Get-ListBoxItem
 
 function Get-ListViewItem
 {
@@ -366,7 +440,7 @@ function Get-ListViewItem
 	
 	IF ($PSBoundParameters['All']) { $ListView.Items }
 	IF ($PSBoundParameters['SelectedItem']) { $ListView.SelectedItems }
-}
+}#Get-ListViewItem
 
 function Remove-ListBoxItem
 {
@@ -411,6 +485,7 @@ function Remove-ListBoxItem
 		IF ($PSBoundParameters['All'])
 		{
 			Write-Verbose -Message "PROCESS - ListBox - Clear all item(s)"
+
 			$ListBox.Items.Clear()
 		}
 		
@@ -447,7 +522,7 @@ function Remove-ListBoxItem
 		Write-Verbose -Message "END - ListBox - End of update"
 		$ListBox.EndUpdate()
 	}
-}
+}#Remove-ListBoxItem
 
 function Set-DataGridView
 {
@@ -539,7 +614,66 @@ function Set-DataGridView
 		}
 	}
 	
-}
+}#Set-DataGridView
+
+function Set-Form
+{
+	[CmdletBinding()]
+	PARAM (
+		[System.Windows.Forms.Form]$Form,
+	[Alias('Title')]
+		[String]$Text = "Hello World",
+	[ValidateSet("Maximized","Minimized","Normal")]	
+	[String]$WindowState
+	)
+	PROCESS
+	{
+		IF ($PSBoundParameters["Text"])
+		{
+			$Form.Text = $Text
+		}
+		IF ($PSBoundParameters["WindowState"])
+		{
+			$Form.WindowState = $WindowState
+		}
+	}#PROCESS
+	
+}#Set-Form
+
+function Set-RichTextBox
+{
+<#
+	.SYNOPSIS
+		The Set-RichTextBox function allow you to manage the richtextbox control
+	
+	.DESCRIPTION
+		The Set-RichTextBox function allow you to manage the richtextbox control
+	
+	.PARAMETER RichTextBox
+		Specifies the RichTextBox Control to use
+	
+	.PARAMETER ScrollToCaret
+		Specifies that the RichTextBox will scroll to the end.
+	
+	.EXAMPLE
+		PS C:\> Set-Richtextbox -PipelineVariable $value1 -RichTextBox $value2
+	
+	.NOTES
+		Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
+	
+	
+	[Cmdletbinding()]
+	PARAM (
+		[System.Windows.Forms.RichTextBox]$RichTextBox,
+		[Switch]$ScrollToCaret)
+	PROCESS
+	{
+		$RichTextBox.ScrollToCaret()
+	}
+}#Set-RichTextBox
 
 
 # FROM SAPIEN.com
@@ -661,7 +795,7 @@ function Add-ListViewItem
 			$listitem.Group = $lvGroup
 		}
 	}
-}
+}#Add-ListViewItem
 
 function ConvertTo-DataTable
 {
@@ -805,7 +939,7 @@ function ConvertTo-DataTable
 	}
 	
 	return @(, $Table)
-}
+}#ConvertTo-DataTable
 
 function Load-DataGridView
 {
@@ -864,7 +998,7 @@ function Load-DataGridView
 	}
 	
 	$DataGridView.ResumeLayout()
-}
+}#Load-DataGridView
 
 function Load-ListBox
 {
@@ -938,7 +1072,7 @@ function Load-ListBox
 	}
 	
 	$listBox.DisplayMember = $DisplayMember
-}
+}#Load-ListBox
 
 function Sort-ListViewColumn
 {
@@ -1056,6 +1190,7 @@ function Sort-ListViewColumn
 		$ListView.Tag = New-Object ListViewItemComparer ($ColumnIndex, $SortOrder)
 		$ListView.ListViewItemSorter = $ListView.Tag #Automatically sorts
 	}
-}
+}#Sort-ListViewColumn
 
+# Export all the functions
 Export-ModuleMember -Function *
