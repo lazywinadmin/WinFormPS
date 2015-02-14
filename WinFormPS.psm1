@@ -410,6 +410,8 @@ function Find-DataGridViewValue
 	PARAM (
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
+		
+		[String]$ColumnName,
 	
 		[Parameter(Mandatory = $true)]
 		$Value,
@@ -430,8 +432,6 @@ function Find-DataGridViewValue
 	
 	PROCESS
 	{
-		$DataGridView.ClearSelection()
-		
 		FOR ([int]$i = 0; $i -lt $DataGridView.RowCount; $i++)
 		{
 			FOR ([int] $j = 0; $j -lt $DataGridView.ColumnCount; $j++)
