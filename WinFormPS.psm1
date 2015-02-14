@@ -169,6 +169,33 @@ function Append-Richtextbox
 	}
 }#Append-Richtextbox
 
+function Clear-DataGridViewSelection
+{
+<#
+	.SYNOPSIS
+		The Clear-DataGridViewSelection function will deselect any cell, row, column selection.
+	
+	.DESCRIPTION
+		The Clear-DataGridViewSelection function will deselect any cell, row, column selection.
+	
+	.PARAMETER DataGridView
+		Specifies the DataGridView Control to use.
+	
+	.EXAMPLE
+		PS C:\> Clear-DataGridViewSelection -DataGridView $datagridviewOutput
+	
+	.NOTES
+		Francois-Xavier Cat
+		@lazywinadm
+		www.lazywinadmin.com
+#>
+	PARAM (
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.DataGridView]$DataGridView
+	)
+	$DataGridView.ClearSelection()
+}#Clear-DataGridViewSelection
+
 function Clear-ListBox
 {
 <#
@@ -381,9 +408,10 @@ function Find-DataGridViewValue
 #>
 	[CmdletBinding(DefaultParameterSetName = "Cell")]
 	PARAM (
-		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
+	
+		[Parameter(Mandatory = $true)]
 		$Value,
 		[Parameter(ParameterSetName = "Cell")]
 		[Switch]$SelectCell,
@@ -395,6 +423,7 @@ function Find-DataGridViewValue
 		#[Switch]$SelectColumn,
 		[Parameter(ParameterSetName = "RowColor")]
 		[system.Drawing.Color]$RowForeColor,
+	
 		[Parameter(ParameterSetName = "RowColor")]
 		[system.Drawing.Color]$RowBackColor
 	)
@@ -411,8 +440,6 @@ function Find-DataGridViewValue
 				
 				if ((-not $CurrentCell.Value.Equals([DBNull]::Value)) -and ($CurrentCell.Value.ToString() -like "*$Value*"))
 				{
-					
-					
 					# Row Selection
 					IF ($PSBoundParameters['SelectRow'])
 					{
@@ -642,6 +669,43 @@ function Remove-ListBoxItem
 	}
 }#Remove-ListBoxItem
 
+function Reset-DataGridViewFormat
+{
+<#
+	.SYNOPSIS
+		The Reset-DataGridViewFormat function will reset the format of a datagridview control
+	
+	.DESCRIPTION
+		The Reset-DataGridViewFormat function will reset the format of a datagridview control
+	
+	.PARAMETER DataGridView
+		Specifies the DataGridView Control.
+	
+	.EXAMPLE
+		PS C:\> Reset-DataGridViewFormat -DataGridView $DataGridViewObj
+	
+	.NOTES
+		Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
+	[CmdletBinding()]
+	PARAM (
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.DataGridView]$DataGridView)
+	PROCESS
+	{
+		$DataSource = $DataGridView.DataSource
+		$DataGridView.DataSource = $null
+		$DataGridView.DataSource = $DataSource
+		
+		#$DataGridView.RowsDefaultCellStyle.BackColor = 'White'
+		#$DataGridView.RowsDefaultCellStyle.ForeColor = 'Black'
+		$DataGridView.RowsDefaultCellStyle = $null
+		$DataGridView.AlternatingRowsDefaultCellStyle = $null
+	}
+}#Reset-DataGridViewFormat
+
 function Set-DataGridView
 {
 	<#
@@ -656,6 +720,9 @@ function Set-DataGridView
 	
 		.EXAMPLE
 			Set-DataGridView -DataGridView $datagridview1 -AlternativeRowColor -BackColor 'AliceBlue' -ForeColor 'Black'
+	
+		.EXAMPLE
+			Set-DataGridView -DataGridView $datagridviewOutput -DefaultRowColor -BackColor 'Beige' -ForeColor 'Brown'
 	
 		.EXAMPLE
 			Set-DataGridViewRowHeader -DataGridView $datagridview1 -HideRowHeader
@@ -678,10 +745,15 @@ function Set-DataGridView
 		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
 		[Switch]$AlternativeRowColor,
 		
+		[Parameter(ParameterSetName = "DefaultRowColor")]
+		[Switch]$DefaultRowColor,
+		
 		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
+		[Parameter(ParameterSetName = "DefaultRowColor")]
 		[System.Drawing.Color]$ForeColor,
 		
 		[Parameter(Mandatory = $true, ParameterSetName = "AlternativeRowColor")]
+		[Parameter(ParameterSetName = "DefaultRowColor")]
 		[System.Drawing.Color]$BackColor,
 		
 		[Parameter(Mandatory = $true, ParameterSetName = "Proper")]
@@ -706,6 +778,11 @@ function Set-DataGridView
 			$DataGridView.AlternatingRowsDefaultCellStyle.BackColor = $BackColor
 		}
 		
+		if ($psboundparameters['DefaultRowColor'])
+		{
+			$DataGridView.RowsDefaultCellStyle.ForeColor = $ForeColor
+			$DataGridView.RowsDefaultCellStyle.BackColor = $BackColor
+		}
 		
 		if ($psboundparameters['ProperFormat'])
 		{

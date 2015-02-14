@@ -136,6 +136,15 @@ function Get-DataGridViewItemCount
 	}
 }
 
+function Show-MessageBox
+{
+	
+}
+
+function Show-MessageBoxInput
+{
+	
+}
 
 
 function Set-DataGridViewColumn
