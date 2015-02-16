@@ -586,6 +586,37 @@ function Get-ListViewItem
 	IF ($PSBoundParameters['SelectedItem']) { $ListView.SelectedItems }
 }#Get-ListViewItem
 
+function New-BalloonNotification
+{
+	[CmdletBinding()]
+	PARAM (
+		[String]$CustomIconPath,
+		[int]$TimeOut = "0",
+		[System.Windows.Forms.ToolTipIcon]$BalloonIcon,
+		$BalloonTipText,
+		$BalloonTipTitle
+	)
+	BEGIN
+	{
+		#[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+	}
+	PROCESS
+	{
+		$BalloonNotification = New-Object -TypeName System.Windows.Forms.NotifyIcon
+		
+		IF ($PSBoundParameters["CustomIconPath"]) { $BalloonNotification.Icon = $CustomIconPath }
+		
+		$BalloonNotification.BalloonTipIcon = $BalloonIcon
+		$BalloonNotification.BalloonTipText = $BalloonTipText
+		$BalloonNotification.BalloonTipTitle = $BalloonTipTitle
+		
+		$BalloonNotification.Visible = $True
+		$BalloonNotification.ShowBalloonTip($TimeOut)
+	}
+	END
+	{ }
+}#New-BalloonNotification
+
 function New-OpenFileDialog
 {
 <#
