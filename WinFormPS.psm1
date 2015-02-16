@@ -411,8 +411,6 @@ function Find-DataGridViewValue
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
 		
-		[String]$ColumnName,
-	
 		[Parameter(Mandatory = $true)]
 		$Value,
 		[Parameter(ParameterSetName = "Cell")]
@@ -423,9 +421,10 @@ function Find-DataGridViewValue
 		
 		#[Parameter(ParameterSetName = "Column")]
 		#[Switch]$SelectColumn,
+		
 		[Parameter(ParameterSetName = "RowColor")]
 		[system.Drawing.Color]$RowForeColor,
-	
+		
 		[Parameter(ParameterSetName = "RowColor")]
 		[system.Drawing.Color]$RowBackColor
 	)
@@ -586,6 +585,276 @@ function Get-ListViewItem
 	IF ($PSBoundParameters['All']) { $ListView.Items }
 	IF ($PSBoundParameters['SelectedItem']) { $ListView.SelectedItems }
 }#Get-ListViewItem
+
+function New-OpenFileDialog
+{
+<#
+	.SYNOPSIS
+		The New-OpenFileDialog function will ask the user to select one of multiple files.
+	
+	.DESCRIPTION
+		The New-OpenFileDialog function will ask the user to select one of multiple files.
+	
+	.PARAMETER WindowsTitle
+		Specifies the Title of the window.
+	
+	.PARAMETER Path
+		Specifies the Path where the dialog will open.
+	
+	.PARAMETER Filter
+		Specifies the extension filter.Default is "All files (*.*)|*.*"
+	
+	.PARAMETER AllowMultiSelect
+		Allow the user to select multiple files.
+	
+	.EXAMPLE
+		PS C:\> New-OpenFileDialog -WindowsTitle 'Upload' -Path 'c:\"
+	
+	.NOTES
+		Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
+	[CmdletBinding()]
+	PARAM (
+		[Parameter(Mandatory = $true)]
+		[String]$WindowsTitle,
+		
+		[String]$Path = "C:\",
+		
+		[String]$Filter = "All files (*.*)|*.*",
+		
+		[switch]$AllowMultiSelect
+	)
+	PROCESS
+	{
+		
+		# Create Object and add properties
+		$OpenFileDialog = New-Object -TypeName System.Windows.Forms.OpenFileDialog
+		$OpenFileDialog.Title = $WindowTitle
+		$OpenFileDialog.InitialDirectory = $Path
+		$OpenFileDialog.Filter = $Filter
+		
+		IF ($PSBoundParameters["AllowMultiSelect"]) { $OpenFileDialog.MultiSelect = $true }
+		
+		# Show the Dialog
+		$OpenFileDialog.ShowHelp = $True
+		[void]$OpenFileDialog.ShowDialog()
+		
+	}
+	END
+	{
+		# Return the selected file
+		IF ($PSBoundParameters["AllowMultiSelect"]) { $OpenFileDialog.Filenames }
+		
+		# Return the selected files
+		IF (-not $PSBoundParameters["AllowMultiSelect"]) { $OpenFileDialog.Filename }
+	}
+}#New-OpenFileDialog
+
+function New-OpenFolderDialog
+{
+<#
+	.SYNOPSIS
+		The New-OpenFolderDialog function will ask the user to select one folder.
+	
+	.DESCRIPTION
+		The New-OpenFolderDialog function will ask the user to select one folder.
+	
+	.PARAMETER Description
+		Specifies a message to help the user select a folder
+	
+	.PARAMETER RootFolder
+		Specifies the folder where to look. All the SpecialFolder are listed using tab. Default is "Desktop".
+	
+	.PARAMETER ShowNewFolderButton
+		Specifies if the "New Folder" button should be displayed. Default is True.
+	
+	.EXAMPLE
+		PS C:\> New-OpenFolderDialog -Description "Please select a folder" -RootFolder "Desktop"
+	
+	.NOTES
+		Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
+	[CmdletBinding()]
+	PARAM
+	(
+		[Alias("Message")]
+		[String]$Description = "Please select a folder",
+		
+		[Alias("Path")]
+		[Environment+SpecialFolder]$RootFolder = "Desktop",
+		
+		[Alias("NewFolderButton", "NewFolder")]
+		[bool]$ShowNewFolderButton = $true
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		# Create an object and properties
+		$FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
+		$FolderBrowser.Description = $Description
+		$FolderBrowser.RootFolder = $RootFolder
+		$FolderBrowser.ShowNewFolderButton = $ShowNewFolderButton
+		
+		# Show the Dialog
+		[void]$FolderBrowser.ShowDialog()
+	}
+	END
+	{
+		# Return the selected folder
+		$FolderBrowser.SelectedPath
+	}
+}#New-OpenFolderDialog
+
+function New-InputBox
+{
+<#
+	.SYNOPSIS
+		The New-InputBox function will prompt the user for input in a window.
+	
+	.DESCRIPTION
+		The New-InputBox function will prompt the user for input in a window.
+	
+	.PARAMETER Message
+		Specifies the question you want to ask to the user.
+	
+	.PARAMETER Title
+		Specifies the title of the window.
+	
+	.PARAMETER DefaultInputText
+		Specifies the default answer text.
+	
+	.EXAMPLE
+		PS C:\> New-InputBox -Message 'What is your computer name' -Title 'Computer' -DefaultInputText "$env:ComputerName"
+	
+	.NOTES
+		Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
+	PARAM (
+		[Parameter(Mandatory = $true)]
+		[string]$Message,
+		
+		[Alias("WindowsTitle")]
+		[string]$Title,
+		
+		[Alias("DefaultText")]
+		[string]$DefaultInputText
+		#[int32]$XPosition,
+		#[int32]$YPosition
+	)
+	BEGIN
+	{
+		TRY
+		{
+			# Load the Assembly
+			Add-Type -AssemblyName Microsoft.VisualBasic -ErrorAction 'Stop' -ErrorVariable ErrorBeginAddType
+		}
+		CATCH
+		{
+			Write-Warning -message "[BEGIN] Something wrong happened"
+			IF ($ErrorBeginAddType) { Write-Warning -message "[BEGIN] Error while loading assembly Microsoft.VisualBasic" }
+			Write-Error -message $Error[0].Exception.Message
+		}
+	}
+	PROCESS
+	{
+		#[Microsoft.VisualBasic.Interaction]::InputBox($Message, $Title, $DefaultInputText, $XPosition, $YPosition)
+		[Microsoft.VisualBasic.Interaction]::InputBox($Message, $Title, $DefaultInputText)
+	}
+}#New-InputBox
+
+function New-MessageBox
+{
+<#
+	.SYNOPSIS
+		The New-MessageBox functio will show a message box to the user
+	
+	.DESCRIPTION
+		The New-MessageBox functio will show a message box to the user
+	
+	.PARAMETER Message
+		Specifies the message to show
+	
+	.PARAMETER Title
+		Specifies the title of the message box
+	
+	.PARAMETER Buttons
+		Specifies which button to add. Just press tab to see the choices
+	
+	.PARAMETER Icon
+		Specifies the icon to show. Just press tab to see the choices
+	
+	.EXAMPLE
+		PS C:\> New-MessageBox -Message "Hello World" -Title "First Message" -Buttons "RetryCancel" -Icon "Asterix"
+	
+	.NOTES
+		Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
+	[CmdletBinding()]
+	PARAM (
+		[String]$Message,
+		[String]$Title,
+		[System.Windows.Forms.MessageBoxButtons]$Buttons,
+		[System.Windows.Forms.MessageBoxIcon]$Icon
+	)
+	PROCESS
+	{
+		[System.Windows.Forms.MessageBox]::Show($Message, $Title, $Buttons, $Icon)
+	}
+}#New-MessageBox
+
+function New-SpeakerBeep
+{
+<#
+	.SYNOPSIS
+		The New-Beep function plays the sound of a beep of a specified frequency and duration through the console speaker.
+	
+	.DESCRIPTION
+		The New-Beep function plays the sound of a beep of a specified frequency and duration through the console speaker.
+	
+	.PARAMETER Frequency
+		The frequency of the beep, ranging from 37 to 32767 hertz.
+	
+	.PARAMETER Duration
+		The duration of the beep measured in milliseconds.
+	
+	.EXAMPLE
+		PS C:\> New-Beep -Frequency 500 -Duration 300
+	
+	.NOTES
+		Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
+	PARAM (
+		[ValidateRange(37, 32767)]
+		[int32]$Frequency = 800,
+		[int32]$Duration = 200
+	)
+	[Console]::Beep($Frequency, $Duration)
+}#New-SpeakerBeep
+
+function Refresh-DataGridView
+{
+	[CmdletBinding()]
+	PARAM (
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.DataGridView]$DataGridView)
+	PROCESS
+	{
+		$DataGridView.Refresh()
+	}
+}#Refresh-DataGridView
 
 function Remove-ListBoxItem
 {
@@ -846,7 +1115,11 @@ function Set-DataGridViewFilter
 		Author: Francois-Xavier Cat
 		Twitter:@LazyWinAdm
 		WWW: 	lazywinadmin.com
+	
+		RowFilter Help:
+		https://msdn.microsoft.com/en-us/library/system.data.datacolumn.expression(VS.80).aspx
 #>
+	[CmdletBinding()]
 	PARAM (
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
@@ -885,13 +1158,47 @@ function Set-DataGridViewFilter
 
 function Set-Form
 {
+<#
+	.SYNOPSIS
+		The Set-Form function is used to change the properties of a Form or to intract with it
+	
+	.DESCRIPTION
+		The Set-Form function is used to change the properties of a Form or to intract with it
+	
+	.PARAMETER Form
+		Specifies the Form control
+	
+	.PARAMETER Text
+		Specifies the text/Title of the form
+	
+	.PARAMETER WindowState
+		Set the Window State of the form.
+	
+	.PARAMETER BringToFront
+		Bring the form to the front of the screen
+	
+	.EXAMPLE
+		PS C:\> Set-Form -Form $form1 -BringToFront
+	
+	.EXAMPLE
+		PS C:\> Set-Form -Form $form1 -Text "My GUI"
+	
+	.EXAMPLE
+		PS C:\> Set-Form -Form $form1 -WindowState "Minimized"
+	
+	.NOTES
+				Author: Francois-Xavier Cat
+		Twitter:@LazyWinAdm
+		WWW: 	lazywinadmin.com
+#>
 	[CmdletBinding()]
 	PARAM (
 		[System.Windows.Forms.Form]$Form,
 		[Alias('Title')]
 		[String]$Text = "Hello World",
 		[ValidateSet("Maximized", "Minimized", "Normal")]
-		[String]$WindowState
+		[String]$WindowState,
+		[Switch]$BringToFront
 	)
 	PROCESS
 	{
@@ -902,6 +1209,10 @@ function Set-Form
 		IF ($PSBoundParameters["WindowState"])
 		{
 			$Form.WindowState = $WindowState
+		}
+		IF ($PSBoundParameters["BringToFront"])
+		{
+			$Form.BringToFront()
 		}
 	}#PROCESS
 	
