@@ -22,23 +22,30 @@ function Add-DataGridViewColumn
 	www.lazywinadmin.com
 	@lazywinadm
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
 		[String[]]$ColumnName
 	)
-	
-	foreach ($Column in $ColumnName)
+	BEGIN
 	{
-		
-		# Create Column object
-		$NewColumn = New-Object -TypeName System.Windows.Forms.DataGridViewTextBoxColumn
-		$NewColumn.Name = $Column
-		$NewColumn.HeaderText = $Column
-		
-		# Add the Column to the Datagridview
-		$DataGridView.Columns.Add($NewColumn)
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		foreach ($Column in $ColumnName)
+		{
+			
+			# Create Column object
+			$NewColumn = New-Object -TypeName System.Windows.Forms.DataGridViewTextBoxColumn
+			$NewColumn.Name = $Column
+			$NewColumn.HeaderText = $Column
+			
+			# Add the Column to the Datagridview
+			$DataGridView.Columns.Add($NewColumn)
+		}
 	}
 }#Add-DataGridViewColumn
 
@@ -58,14 +65,22 @@ function Add-DataGridViewRow
 	www.lazywinadmin.com
 	@lazywinadm
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView,
 		[Array]$Values
 	)
-	# Add a row
-	$DataGridView.Rows.Add($Values)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		# Add a row
+		$DataGridView.Rows.Add($Values)
+	}
 }#Function Add-DataGridViewRow
 
 function Append-Richtextbox
@@ -122,6 +137,8 @@ function Append-Richtextbox
 	
 	BEGIN
 	{
+		Add-Type -AssemblyName System.Windows.Forms
+		
 		# Get current date/time. Example: 2015-12-20 18:25:03
 		$SortableTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 	}
@@ -189,11 +206,19 @@ function Clear-DataGridViewSelection
 		@lazywinadm
 		www.lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.DataGridView]$DataGridView
 	)
-	$DataGridView.ClearSelection()
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$DataGridView.ClearSelection()
+	}
 }#Clear-DataGridViewSelection
 
 function Clear-ListBox
@@ -208,12 +233,20 @@ function Clear-ListBox
 	@lazywinadm
 	www.lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.ListBox]$ListBox)
-	
-	$ListBox.Items.Clear()
+		[System.Windows.Forms.ListBox]$ListBox
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$ListBox.Items.Clear()
+	}
 }#Clear-ListBox
 
 function Clear-RichTextBox
@@ -228,14 +261,21 @@ function Clear-RichTextBox
 	@lazywinadm
 	www.lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory)]
 		[System.Windows.Forms.Richtextbox]$RichTextBox
 	)
-	
-	#Clear the RichTextBox
-	$RichTextBox.Clear()
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		#Clear the RichTextBox
+		$RichTextBox.Clear()
+	}
 }#Clear-RichTextBox
 
 function Disable-Button
@@ -256,7 +296,14 @@ function Disable-Button
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.Button]$Button
 	)
-	$Button.Enabled = $false
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$Button.Enabled = $false
+	}
 }#Disable-Button
 
 function Disable-RichTextBox
@@ -271,12 +318,20 @@ function Disable-RichTextBox
 	@lazywinadm
 	www.lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.RichTextBox]$RichTextBox
 	)
-	$RichTextBox.Enabled = $false
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$RichTextBox.Enabled = $false
+	}
 }#Disable-RichTextBox
 
 function Disable-TabControl
@@ -291,12 +346,20 @@ function Disable-TabControl
 	@lazywinadm
 	www.lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.TabControl]$TabControl
 	)
-	$TabControl.Enabled = $false
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$TabControl.Enabled = $false
+	}
 }#Disable-TabControl
 
 function Enable-Button
@@ -317,7 +380,14 @@ function Enable-Button
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.Button]$Button
 	)
-	$Button.Enabled = $true
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$Button.Enabled = $true
+	}
 }#Enable-Button
 
 function Enable-RichTextBox
@@ -332,12 +402,20 @@ function Enable-RichTextBox
 	@lazywinadm
 	www.lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.RichTextBox]$RichTextBox
 	)
-	$RichTextBox.Enabled = $true
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$RichTextBox.Enabled = $true
+	}
 }#Enable-RichTextBox
 
 function Enable-TabControl
@@ -352,12 +430,20 @@ function Enable-TabControl
 	@lazywinadm
 	www.lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
 		[System.Windows.Forms.TabControl]$TabControl
 	)
-	$TabControl.Enabled = $true
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$TabControl.Enabled = $true
+	}
 }#Enable-TabControl
 
 function Find-DataGridViewValue
@@ -428,7 +514,10 @@ function Find-DataGridViewValue
 		[Parameter(ParameterSetName = "RowColor")]
 		[system.Drawing.Color]$RowBackColor
 	)
-	
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		FOR ([int]$i = 0; $i -lt $DataGridView.RowCount; $i++)
@@ -487,6 +576,10 @@ function Get-Form
 		[Alias('Title')]
 		[Switch]$Text
 	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		IF ($PSBoundParameters["Controls"])
@@ -522,7 +615,7 @@ function Get-ListBoxItem
 			VERSION HISTORY
 				1.0	2014/04/15	Initial Version
 	#>
-	#Requires -Version 3
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(ParameterSetName = "All")]
@@ -535,16 +628,22 @@ function Get-ListBoxItem
 		[Parameter(ParameterSetName = "All")]
 		[switch]$All
 	)
-	
-	#All
-	IF ($PSBoundParameters['All'])
+	BEGIN
 	{
-		$ListBox.Items
+		Add-Type -AssemblyName System.Windows.Forms
 	}
-	
-	IF ($PSBoundParameters['SelectedItem'])
+	PROCESS
 	{
-		$ListBox.SelectedItems
+		#All
+		IF ($PSBoundParameters['All'])
+		{
+			$ListBox.Items
+		}
+		
+		IF ($PSBoundParameters['SelectedItem'])
+		{
+			$ListBox.SelectedItems
+		}
 	}
 }#Get-ListBoxItem
 
@@ -565,7 +664,7 @@ function Get-ListViewItem
 			VERSION HISTORY
 				1.0	2014/07/03	Initial Version
 	#>
-	#Requires -Version 3
+	[CmdletBinding()]
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(ParameterSetName = "All",
@@ -598,7 +697,8 @@ function New-BalloonNotification
 	)
 	BEGIN
 	{
-		#[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+		Add-Type -AssemblyName System.Windows.Forms
+		#[void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 	}
 	PROCESS
 	{
@@ -648,7 +748,6 @@ function New-OpenFileDialog
 #>
 	[CmdletBinding()]
 	PARAM (
-		[Parameter(Mandatory = $true)]
 		[String]$WindowsTitle,
 		
 		[String]$Path = "C:\",
@@ -657,13 +756,19 @@ function New-OpenFileDialog
 		
 		[switch]$AllowMultiSelect
 	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		
 		# Create Object and add properties
 		$OpenFileDialog = New-Object -TypeName System.Windows.Forms.OpenFileDialog
-		$OpenFileDialog.Title = $WindowTitle
 		$OpenFileDialog.InitialDirectory = $Path
+		$OpenFileDialog.CheckPathExists = $true
+		$OpenFileDialog.t
+		$OpenFileDialog.Title = $WindowTitle
 		$OpenFileDialog.Filter = $Filter
 		
 		IF ($PSBoundParameters["AllowMultiSelect"]) { $OpenFileDialog.MultiSelect = $true }
@@ -798,7 +903,7 @@ function New-InputBox
 	PROCESS
 	{
 		#[Microsoft.VisualBasic.Interaction]::InputBox($Message, $Title, $DefaultInputText, $XPosition, $YPosition)
-		[Microsoft.VisualBasic.Interaction]::InputBox($Message, $Title, $DefaultInputText)
+		$input = [Microsoft.VisualBasic.Interaction]::InputBox($Message, $Title, $DefaultInputText)
 	}
 }#New-InputBox
 
@@ -833,11 +938,16 @@ function New-MessageBox
 #>
 	[CmdletBinding()]
 	PARAM (
+		
 		[String]$Message,
 		[String]$Title,
-		[System.Windows.Forms.MessageBoxButtons]$Buttons,
-		[System.Windows.Forms.MessageBoxIcon]$Icon
+		[System.Windows.Forms.MessageBoxButtons]$Buttons = "OK",
+		[System.Windows.Forms.MessageBoxIcon]$Icon = "None"
 	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		[System.Windows.Forms.MessageBox]::Show($Message, $Title, $Buttons, $Icon)
@@ -867,12 +977,16 @@ function New-SpeakerBeep
 		Twitter:@LazyWinAdm
 		WWW: 	lazywinadmin.com
 #>
+	[CmdletBinding()]
 	PARAM (
 		[ValidateRange(37, 32767)]
 		[int32]$Frequency = 800,
 		[int32]$Duration = 200
 	)
-	[Console]::Beep($Frequency, $Duration)
+	PROCESS
+	{
+		[Console]::Beep($Frequency, $Duration)
+	}
 }#New-SpeakerBeep
 
 function Refresh-DataGridView
@@ -880,7 +994,12 @@ function Refresh-DataGridView
 	[CmdletBinding()]
 	PARAM (
 		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.DataGridView]$DataGridView)
+		[System.Windows.Forms.DataGridView]$DataGridView
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		$DataGridView.Refresh()
@@ -922,8 +1041,10 @@ function Remove-ListBoxItem
 	)
 	BEGIN
 	{
+		Add-Type -AssemblyName System.Windows.Forms
+		
 		Write-Verbose -Message "BEGIN - ListBox - Begining to update"
-		$ListBox.BeginUpdate()
+		$ListBox.BeginUpdate()	
 	}
 	PROCESS
 	{
@@ -992,7 +1113,12 @@ function Reset-DataGridViewFormat
 	[CmdletBinding()]
 	PARAM (
 		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.DataGridView]$DataGridView)
+		[System.Windows.Forms.DataGridView]$DataGridView
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		$DataSource = $DataGridView.DataSource
@@ -1070,6 +1196,10 @@ function Set-DataGridView
 		[Parameter(ParameterSetName = "ShowRowHeader")]
 		[Switch]$ShowRowHeader
 	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		if ($psboundparameters['AlternativeRowColor'])
@@ -1164,6 +1294,10 @@ function Set-DataGridViewFilter
 		[Parameter(Mandatory = $true, ParameterSetName = "AllColumns")]
 		[Switch]$AllColumns
 	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		IF ($PSBoundParameters['AllColumns'])
@@ -1231,6 +1365,10 @@ function Set-Form
 		[String]$WindowState,
 		[Switch]$BringToFront
 	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		IF ($PSBoundParameters["Text"])
@@ -1277,7 +1415,12 @@ function Set-RichTextBox
 	[Cmdletbinding()]
 	PARAM (
 		[System.Windows.Forms.RichTextBox]$RichTextBox,
-		[Switch]$ScrollToCaret)
+		[Switch]$ScrollToCaret
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
 	PROCESS
 	{
 		$RichTextBox.ScrollToCaret()
@@ -1336,44 +1479,70 @@ function Add-ListViewItem
 		[int]$ImageIndex = -1,
 		[string[]]$SubItems,
 		$Group,
-		[switch]$Clear)
-	
-	if ($Clear)
+		[switch]$Clear
+	)
+	BEGIN
 	{
-		$ListView.Items.Clear();
+		Add-Type -AssemblyName System.Windows.Forms
 	}
-	
-	$lvGroup = $null
-	if ($Group -is [System.Windows.Forms.ListViewGroup])
+	PROCESS
 	{
-		$lvGroup = $Group
-	}
-	elseif ($Group -is [string])
-	{
-		#$lvGroup = $ListView.Group[$Group] # Case sensitive
-		foreach ($groupItem in $ListView.Groups)
+		
+		if ($Clear)
 		{
-			if ($groupItem.Name -eq $Group)
+			$ListView.Items.Clear();
+		}
+		
+		$lvGroup = $null
+		if ($Group -is [System.Windows.Forms.ListViewGroup])
+		{
+			$lvGroup = $Group
+		}
+		elseif ($Group -is [string])
+		{
+			#$lvGroup = $ListView.Group[$Group] # Case sensitive
+			foreach ($groupItem in $ListView.Groups)
 			{
-				$lvGroup = $groupItem
-				break
+				if ($groupItem.Name -eq $Group)
+				{
+					$lvGroup = $groupItem
+					break
+				}
+			}
+			
+			if ($lvGroup -eq $null)
+			{
+				$lvGroup = $ListView.Groups.Add($Group, $Group)
 			}
 		}
 		
-		if ($lvGroup -eq $null)
+		if ($Items -is [Array])
 		{
-			$lvGroup = $ListView.Groups.Add($Group, $Group)
+			$ListView.BeginUpdate()
+			foreach ($item in $Items)
+			{
+				$listitem = $ListView.Items.Add($item.ToString(), $ImageIndex)
+				#Store the object in the Tag
+				$listitem.Tag = $item
+				
+				if ($SubItems -ne $null)
+				{
+					$listitem.SubItems.AddRange($SubItems)
+				}
+				
+				if ($lvGroup -ne $null)
+				{
+					$listitem.Group = $lvGroup
+				}
+			}
+			$ListView.EndUpdate()
 		}
-	}
-	
-	if ($Items -is [Array])
-	{
-		$ListView.BeginUpdate()
-		foreach ($item in $Items)
+		else
 		{
-			$listitem = $ListView.Items.Add($item.ToString(), $ImageIndex)
+			#Add a new item to the ListView
+			$listitem = $ListView.Items.Add($Items.ToString(), $ImageIndex)
 			#Store the object in the Tag
-			$listitem.Tag = $item
+			$listitem.Tag = $Items
 			
 			if ($SubItems -ne $null)
 			{
@@ -1385,25 +1554,7 @@ function Add-ListViewItem
 				$listitem.Group = $lvGroup
 			}
 		}
-		$ListView.EndUpdate()
-	}
-	else
-	{
-		#Add a new item to the ListView
-		$listitem = $ListView.Items.Add($Items.ToString(), $ImageIndex)
-		#Store the object in the Tag
-		$listitem.Tag = $Items
-		
-		if ($SubItems -ne $null)
-		{
-			$listitem.SubItems.AddRange($SubItems)
-		}
-		
-		if ($lvGroup -ne $null)
-		{
-			$listitem.Group = $lvGroup
-		}
-	}
+	}#PROCESS
 }#Add-ListViewItem
 
 function ConvertTo-DataTable
@@ -1583,30 +1734,39 @@ function Load-DataGridView
 		[Parameter(Mandatory = $false)]
 		[string]$DataMember
 	)
-	$DataGridView.SuspendLayout()
-	$DataGridView.DataMember = $DataMember
-	
-	if ($Item -is [System.ComponentModel.IListSource]`
-	-or $Item -is [System.ComponentModel.IBindingList] -or $Item -is [System.ComponentModel.IBindingListView])
+	BEGIN
 	{
-		$DataGridView.DataSource = $Item
+		Add-Type -AssemblyName System.Windows.Forms
 	}
-	else
+	PROCESS
 	{
-		$array = New-Object System.Collections.ArrayList
+		$DataGridView.SuspendLayout()
+		$DataGridView.DataMember = $DataMember
 		
-		if ($Item -is [System.Collections.IList])
+		if ($Item -is [System.ComponentModel.IListSource]`
+		-or $Item -is [System.ComponentModel.IBindingList] -or $Item -is [System.ComponentModel.IBindingListView])
 		{
-			$array.AddRange($Item)
+			$DataGridView.DataSource = $Item
 		}
 		else
 		{
-			$array.Add($Item)
+			$array = New-Object System.Collections.ArrayList
+			
+			if ($Item -is [System.Collections.IList])
+			{
+				$array.AddRange($Item)
+			}
+			else
+			{
+				$array.Add($Item)
+			}
+			$DataGridView.DataSource = $array
 		}
-		$DataGridView.DataSource = $array
 	}
-	
-	$DataGridView.ResumeLayout()
+	END
+	{
+		$DataGridView.ResumeLayout()
+	}
 }#Load-DataGridView
 
 function Load-ListBox
@@ -1656,31 +1816,38 @@ function Load-ListBox
 		[string]$DisplayMember,
 		[switch]$Append
 	)
-	
-	if (-not $Append)
+	BEGIN
 	{
-		$listBox.Items.Clear()
+		Add-Type -AssemblyName System.Windows.Forms
 	}
-	
-	if ($Items -is [System.Windows.Forms.ListBox+ObjectCollection])
+	PROCESS
 	{
-		$listBox.Items.AddRange($Items)
-	}
-	elseif ($Items -is [Array])
-	{
-		$listBox.BeginUpdate()
-		foreach ($obj in $Items)
+		
+		if (-not $Append)
 		{
-			$listBox.Items.Add($obj)
+			$listBox.Items.Clear()
 		}
-		$listBox.EndUpdate()
-	}
-	else
-	{
-		$listBox.Items.Add($Items)
-	}
-	
-	$listBox.DisplayMember = $DisplayMember
+		
+		if ($Items -is [System.Windows.Forms.ListBox+ObjectCollection])
+		{
+			$listBox.Items.AddRange($Items)
+		}
+		elseif ($Items -is [Array])
+		{
+			$listBox.BeginUpdate()
+			foreach ($obj in $Items)
+			{
+				$listBox.Items.Add($obj)
+			}
+			$listBox.EndUpdate()
+		}
+		else
+		{
+			$listBox.Items.Add($Items)
+		}
+		
+		$listBox.DisplayMember = $DisplayMember
+	}#PROCESS
 }#Load-ListBox
 
 function Sort-ListViewColumn
