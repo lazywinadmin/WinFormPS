@@ -150,3 +150,42 @@ function Set-DataGridViewColumn
 	)
 	$DataGridView.ColumnCount = $NumberOfColumn
 }
+
+function Set-TextBox
+{
+	[CmdletBinding()]
+	PARAM (
+		[System.Windows.Forms.TextBox]$TextBox,
+		[System.Drawing.Color]$BackColor
+	)
+	BEGIN { }
+	PROCESS
+	{
+		TRY
+		{
+			$TextBox.BackColor = $BackColor
+		}
+		CATCH { }
+	}
+}
+
+function Reset-TextBox
+{
+	[CmdletBinding()]
+	PARAM (
+		[System.Windows.Forms.TextBox]$TextBox,
+		[System.Drawing.Color]$BackColor = "White",
+		[System.Drawing.Color]$ForeColor = "Black"
+	)
+	BEGIN { }
+	PROCESS
+	{
+		TRY
+		{
+			$TextBox.Text = ""
+			$TextBox.BackColor = $BackColor
+			$TextBox.ForeColor = $ForeColor
+		}
+		CATCH { }
+	}
+}

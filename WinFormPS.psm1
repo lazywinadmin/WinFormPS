@@ -294,7 +294,7 @@ function Disable-Button
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.Button]$Button
+		[System.Windows.Forms.Button[]]$Button
 	)
 	BEGIN
 	{
@@ -302,7 +302,11 @@ function Disable-Button
 	}
 	PROCESS
 	{
-		$Button.Enabled = $false
+		foreach ($ButtonObject in $Button)
+		{
+			$ButtonObject.Enabled = $false	
+		}
+		
 	}
 }#Disable-Button
 
@@ -378,7 +382,7 @@ function Enable-Button
 	PARAM (
 		[ValidateNotNull()]
 		[Parameter(Mandatory = $true)]
-		[System.Windows.Forms.Button]$Button
+		[System.Windows.Forms.Button[]]$Button
 	)
 	BEGIN
 	{
@@ -386,7 +390,10 @@ function Enable-Button
 	}
 	PROCESS
 	{
-		$Button.Enabled = $true
+		foreach ($ButtonObject in $Button)
+		{
+			$ButtonObject.Enabled = $true
+		}
 	}
 }#Enable-Button
 
