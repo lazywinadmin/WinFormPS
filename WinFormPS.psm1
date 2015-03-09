@@ -366,6 +366,34 @@ function Disable-TabControl
 	}
 }#Disable-TabControl
 
+function Disable-TextBox
+{
+<#
+.SYNOPSIS
+	This function will disable a TextBox control
+.EXAMPLE
+	Disable-TextBox -TextBox $TextBox
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
+	[CmdletBinding()]
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.TextBox]$TextBox
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$TextBox.Enabled = $false
+	}
+}#Disable-TextBox
+
 function Enable-Button
 {
 <#
@@ -452,6 +480,34 @@ function Enable-TabControl
 		$TabControl.Enabled = $true
 	}
 }#Enable-TabControl
+
+function Enable-TextBox
+{
+<#
+.SYNOPSIS
+	This function will enable a TextBox control
+.EXAMPLE
+	Enable-TextBox -TextBox $TextBox
+.NOTES
+	Francois-Xavier Cat
+	@lazywinadm
+	www.lazywinadmin.com
+#>
+	[CmdletBinding()]
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(Mandatory = $true)]
+		[System.Windows.Forms.TextBox]$TextBox
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		$TextBox.Enabled = $true
+	}
+}#Enable-TextBox
 
 function Find-DataGridViewValue
 {
