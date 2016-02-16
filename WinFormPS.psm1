@@ -629,6 +629,53 @@ function Find-DataGridViewValue
 	}#PROCESS
 }#Find-DataGridViewValue
 
+function Get-ComboboxItem
+{
+	<#
+		.SYNOPSIS
+			Function to get item(s) from a Combobox Control
+		.DESCRIPTION
+			Function to get item(s) from a Combobox Control
+		.NOTES
+			Author: Francois-Xavier Cat
+			Twitter:@LazyWinAdm
+			WWW: 	lazywinadmin.com
+		
+			VERSION HISTORY
+				1.0	2016/02/15	Initial Version
+	#>
+	[CmdletBinding()]
+	PARAM (
+		[ValidateNotNull()]
+		[Parameter(ParameterSetName = "All")]
+		[Parameter(ParameterSetName = "Selected")]
+		[System.Windows.Forms.ComboBox]$ComboBox,
+		
+		[Parameter(ParameterSetName = "Selected")]
+		[switch]$SelectedItem,
+		
+		[Parameter(ParameterSetName = "All")]
+		[switch]$All
+	)
+	BEGIN
+	{
+		Add-Type -AssemblyName System.Windows.Forms
+	}
+	PROCESS
+	{
+		#All
+		IF ($PSBoundParameters['All'])
+		{
+			$ComboBox.Items
+		}
+		
+		IF ($PSBoundParameters['SelectedItem'])
+		{
+			$ComboBox.SelectedItem
+		}
+	}
+} #Get-ComboBoxItem
+
 function Get-Form
 {
 	[CmdletBinding()]
