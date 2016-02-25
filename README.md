@@ -12,6 +12,47 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
 ```
 # Change Log
 
+# Cmdlets
+
+* Add-DataGridViewColumn
+* Add-DataGridViewRow
+* Add-ListViewItem
+* Add-RichTextBoxText
+* Clear-DataGridViewSelection
+* Clear-ListBox
+* Clear-RichTextBox
+* ConvertTo-DataTable
+* Disable-Button
+* Disable-RichTextBox
+* Disable-TabControl
+* Disable-TextBox
+* Enable-Button
+* Enable-RichTextBox
+* Enable-TabControl
+* Enable-TextBox
+* Find-DataGridViewValue
+* Get-CheckedListBoxItem
+* Get-ComboboxItem
+* Get-Form
+* Get-ListBoxItem
+* Get-ListViewItem
+* Load-DataGridView
+* Load-ListBox
+* New-BalloonNotification
+* New-InputBox
+* New-MessageBox
+* New-OpenFileDialog
+* New-OpenFolderDialog
+* New-SpeakerBeep
+* Refresh-DataGridView
+* Remove-ListBoxItem
+* Reset-DataGridViewFormat
+* Set-DataGridView
+* Set-DataGridViewFilter
+* Set-Form
+* Set-RichTextBox
+* Sort-ListViewColumn
+
 # Examples
 
 
