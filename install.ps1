@@ -1,6 +1,6 @@
 param([string]$InstallDirectory)
 
-$fileList = echo `
+$fileList = Write-Output `
     WinFormPS.psd1 `
     WinFormPS.psm1
     

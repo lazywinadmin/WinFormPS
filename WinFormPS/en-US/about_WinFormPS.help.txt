@@ -1,0 +1,19 @@
+PSTOPIC
+
+    about_WinFormPS
+
+SHORT DESCRIPTION
+
+    WinFormPS allows you to work with Windows Forms (WinForms), a library included as a part of Microsoft .NET Framework
+
+LONG DESCRIPTION
+
+    WinFormPS allows you to work with Windows Forms (WinForms), a library included as a part of Microsoft .NET Framework
+
+    You can find Windows Forms MSDN documentation here here:
+        https://msdn.microsoft.com/en-us/library/dd30h2yb(v=vs.110).aspx
+
+DETAILED DESCRIPTION
+
+    WinFormPS allows you to work with Windows Forms (WinForms), a library included as a part of Microsoft .NET Framework
+

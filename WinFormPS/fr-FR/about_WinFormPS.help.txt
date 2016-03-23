@@ -1,0 +1,18 @@
+PSTOPIC
+
+	about_WinFormPS
+
+SHORT DESCRIPTION
+
+	WinFormPS permet de travailler avec les controles Windows Forms (WinForms), une librairie faisant partie de Microsoft .NET Framework
+
+LONG DESCRIPTION
+
+	WinFormPS permet de travailler avec les controles Windows Forms (WinForms), une librairie faisant partie de Microsoft .NET Framework
+
+	Vous pouvez trouver la documentation sur le site de MSDN suivant:
+        https://msdn.microsoft.com/en-us/library/dd30h2yb(v=vs.110).aspx
+
+DETAILED DESCRIPTION
+
+	WinFormPS permet de travailler avec les controles Windows Forms (WinForms), une librairie faisant partie de Microsoft .NET Framework
