@@ -1,8 +1,12 @@
 param([string]$InstallDirectory)
 
+$ModuleName = "WinFormPS"
+$GitHubUser = "LazyWinAdmin"
+$GithubPath = "https://raw.github.com/$GitHubUser/$ModuleName/master/$ModuleName"
+
 $fileList = Write-Output `
-    WinFormPS.psd1 `
-    WinFormPS.psm1
+	"$ModuleName.psd1" `
+	"$ModuleName.psm1"
     
 
 if ('' -eq $InstallDirectory)
@@ -17,7 +21,7 @@ if ('' -eq $InstallDirectory)
         Write-Error "$personalModules does not exist"
     }
 
-    $InstallDirectory = Join-Path -Path $personalModules -ChildPath WinFormPS
+    $InstallDirectory = Join-Path -Path $personalModules -ChildPath $ModuleName
 }
 
 if (-not(Test-Path $InstallDirectory)) {
@@ -27,5 +31,5 @@ if (-not(Test-Path $InstallDirectory)) {
 $WebClient = New-Object -typename System.Net.WebClient
 $fileList |
     ForEach-Object {
-        $WebClient.DownloadFile("https://raw.github.com/LazyWinAdmin/WinFormPS/master/$_","$installDirectory\$_")
+        $WebClient.DownloadFile("$GithubPath/$_","$installDirectory\$_")
     }
