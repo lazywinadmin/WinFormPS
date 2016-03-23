@@ -4,13 +4,30 @@ WinFormPS is a PowerShell module to manage Windows Forms (WinForms) Controls.
 
 If you are among those creating PowerShell Graphical User Interface using tools such as SAPIEN PowerShell Studio, you will realize the big need for functions to interact with the different WinForms Controls.
 
-# Installation
-To install in your personal modules folder (e.g. ~\Documents\WindowsPowerShell\Modules), run:
+## Installation
+#### Download from PowerShell Gallery
+Coming soon...
+#### Download from GitHub repository
 
+* Download the repository
+* Unblock the zip file
+* Extract the folder to a module path (e.g. $home\Documents\WindowsPowerShell\Modules)
+
+
+## Usage
 ```powershell
-iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/lazywinadmin/WinFormPS/master/install.ps1')
+
+# Import the module.
+Import-Module -Name WinFormPS
+
+# Get the commands available
+Get-Command -Module WinFormPS
+
+# Get help
+Get-Help Get-WFForm
+Get-Help about_WinFormPS
 ```
 
-# Examples
+## Examples
 
 
