@@ -41,4 +41,4 @@
 			$DataGridView.Columns.Add($NewColumn)
 		}
 	}
-} #Add-WFDataGridViewColumn
+}

@@ -1,4 +1,4 @@
-﻿function Import-DataGridViewItem
+﻿function Import-WFDataGridViewItem
 {
 	<#
 	.SYNOPSIS
@@ -66,5 +66,4 @@
 	{
 		$DataGridView.ResumeLayout()
 	}
-} #Import-DataGridViewItem
-#Set-Alias -name Load-DataGridView -value Import-DataGridViewItem -Description "Previous Name of this function"
+}
