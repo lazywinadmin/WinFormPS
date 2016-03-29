@@ -1,4 +1,4 @@
-﻿function Import-WFDataGridViewItem
+﻿function Import-WFDataGridView
 {
 	<#
 	.SYNOPSIS
@@ -16,9 +16,14 @@
 	.PARAMETER  DataMember
 		Sets the name of the list or table in the data source for which the DataGridView is displaying data.
 	
+	.EXAMPLE
+		Import-WFDataGridView -DataGridView $DataGridView1 -Item (Get-Process)
+	
 	.NOTES
+		Based on Load-DataGridView function from:
 		SAPIEN Technologies, Inc.
 		http://www.sapien.com/
+		
 	#>
 	
 	Param (

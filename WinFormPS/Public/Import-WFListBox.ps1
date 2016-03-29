@@ -1,4 +1,4 @@
-﻿function Import-ListBoxItem
+﻿function Import-WFListBox
 {
 <#
 	.SYNOPSIS
@@ -20,15 +20,15 @@
 		Adds the item(s) to the ListBox without clearing the Items collection.
 	
 	.EXAMPLE
-		Import-ListBoxItem $ListBox1 "Red", "White", "Blue"
+		Import-WFListBox $ListBox1 "Red", "White", "Blue"
 	
 	.EXAMPLE
-		Import-ListBoxItem $listBox1 "Red" -Append
-		Import-ListBoxItem $listBox1 "White" -Append
-		Import-ListBoxItem $listBox1 "Blue" -Append
+		Import-WFListBox $listBox1 "Red" -Append
+		Import-WFListBox $listBox1 "White" -Append
+		Import-WFListBox $listBox1 "Blue" -Append
 	
 	.EXAMPLE
-		Import-ListBoxItem $listBox1 (Get-Process) "ProcessName"
+		Import-WFListBox $listBox1 (Get-Process) "ProcessName"
 		
 	.NOTES
 		SAPIEN Technologies, Inc.
@@ -80,5 +80,4 @@
 		
 		$listBox.DisplayMember = $DisplayMember
 	} #PROCESS
-} #Import-ListBoxItem
-#Set-Alias -Name Load-ListBox -Value Import-ListBoxItem -Description "Previous Name of this function"
+}
