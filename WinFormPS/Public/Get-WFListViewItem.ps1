@@ -1,4 +1,4 @@
-﻿function Get-ListViewItem
+﻿function Get-WFListViewItem
 {
 	<#
 		.SYNOPSIS
@@ -6,6 +6,11 @@
 
 		.DESCRIPTION
 			Function to get item(s) from a ListView Control
+            
+        .EXAMPLE
+            Get-WFListViewItem -ListView $ListView1 -SelectedItem
+            
+            This will return all the selected item in the list view $listview1        
 
 		.NOTES
 			Author: Francois-Xavier Cat
@@ -36,4 +41,4 @@
 	
 	IF ($PSBoundParameters['All']) { $ListView.Items }
 	IF ($PSBoundParameters['SelectedItem']) { $ListView.SelectedItems }
-} #Get-ListViewItem
+}

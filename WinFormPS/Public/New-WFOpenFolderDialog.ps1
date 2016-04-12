@@ -1,11 +1,11 @@
-﻿function New-OpenFolderDialog
+﻿function New-WFOpenFolderDialog
 {
 <#
 	.SYNOPSIS
-		The New-OpenFolderDialog function will ask the user to select one folder.
+		The New-WFOpenFolderDialog function will ask the user to select one folder.
 	
 	.DESCRIPTION
-		The New-OpenFolderDialog function will ask the user to select one folder.
+		The New-WFOpenFolderDialog function will ask the user to select one folder.
 	
 	.PARAMETER Description
 		Specifies a message to help the user select a folder
@@ -17,7 +17,7 @@
 		Specifies if the "New Folder" button should be displayed. Default is True.
 	
 	.EXAMPLE
-		PS C:\> New-OpenFolderDialog -Description "Please select a folder" -RootFolder "Desktop"
+		PS C:\> New-WFOpenFolderDialog -Description "Please select a folder" -RootFolder "Desktop"
 	
 	.NOTES
 		Author: Francois-Xavier Cat

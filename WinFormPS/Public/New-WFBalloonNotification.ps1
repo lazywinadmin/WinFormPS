@@ -1,11 +1,11 @@
-﻿function New-BalloonNotification
+﻿function New-WFBalloonNotification
 {
 <#
 	.SYNOPSIS
-		The New-BalloonNotification function will show a message to the user in the notification area of Windows.
+		The New-WFBalloonNotification function will show a message to the user in the notification area of Windows.
 	
 	.DESCRIPTION
-		The New-BalloonNotification function will show a message to the user in the notification area of Windows.
+		The New-WFBalloonNotification function will show a message to the user in the notification area of Windows.
 	
 	.PARAMETER CustomIconPath
 		Specifies the custom icon literal path to use. Default will use the PowerShell icon.
@@ -23,7 +23,7 @@
 		Specifies the Title to show.
 	
 	.EXAMPLE
-		PS C:\> New-BalloonNotification -BalloonTipText "test" -BalloonTipTitle "Title" -BalloonIcon Error
+		PS C:\> New-WFBalloonNotification -BalloonTipText "test" -BalloonTipTitle "Title" -BalloonIcon Error
 	
 	.NOTES
 		Author: Francois-Xavier Cat

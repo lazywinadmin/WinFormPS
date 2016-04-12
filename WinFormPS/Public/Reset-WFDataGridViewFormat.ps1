@@ -1,4 +1,4 @@
-﻿function Reset-DataGridViewFormat
+﻿function Reset-WFDataGridViewFormat
 {
 <#
 	.SYNOPSIS
@@ -45,4 +45,4 @@
 			$DataGridView.AlternatingRowsDefaultCellStyle = $null
 		}
 	}
-} #Reset-DataGridViewFormat
+}

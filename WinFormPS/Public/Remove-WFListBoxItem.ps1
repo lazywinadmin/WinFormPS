@@ -1,4 +1,4 @@
-﻿function Remove-ListBoxItem
+﻿function Remove-WFListBoxItem
 {
 <#
 	.SYNOPSIS
@@ -111,4 +111,4 @@
 		Write-Verbose -Message "END - ListBox - End of update"
 		$ListBox.EndUpdate()
 	}
-} #Remove-ListBoxItem
+}

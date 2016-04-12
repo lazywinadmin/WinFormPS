@@ -1,12 +1,12 @@
-﻿function New-OpenFileDialog
+﻿function New-WFOpenFileDialog
 {
 <#
 	.SYNOPSIS
-		The New-OpenFileDialog function will ask the user to select one of multiple files.
+		The New-WFOpenFileDialog function will ask the user to select one of multiple files.
 		The function will return the literal path of the file(s) selected
 	
 	.DESCRIPTION
-		The New-OpenFileDialog function will ask the user to select one of multiple files.
+		The New-WFOpenFileDialog function will ask the user to select one of multiple files.
 		The function will return the literal path of the file(s) selected
 	
 	.PARAMETER WindowsTitle
@@ -17,12 +17,15 @@
 	
 	.PARAMETER Filter
 		Specifies the extension filter.Default is "All files (*.*)|*.*"
-	
+            Other example: 
+                "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                "Photos files (*.jpg)|*.png|All files (*.*)|*.*";
+                        
 	.PARAMETER AllowMultiSelect
 		Allow the user to select multiple files.
 	
 	.EXAMPLE
-		PS C:\> New-OpenFileDialog -WindowsTitle 'Upload' -Path 'c:\"
+		PS C:\> New-WFOpenFileDialog -WindowsTitle 'Upload' -Path 'c:\"
 	
 	.NOTES
 		Author: Francois-Xavier Cat

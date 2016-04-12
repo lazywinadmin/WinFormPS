@@ -1,11 +1,11 @@
-﻿function New-SpeakerBeep
+﻿function New-WFSpeakerBeep
 {
 <#
 	.SYNOPSIS
-		The New-Beep function plays the sound of a beep of a specified frequency and duration through the console speaker.
+		The New-WFSpeakerBeep function plays the sound of a beep of a specified frequency and duration through the console speaker.
 	
 	.DESCRIPTION
-		The New-Beep function plays the sound of a beep of a specified frequency and duration through the console speaker.
+		The New-WFSpeakerBeep function plays the sound of a beep of a specified frequency and duration through the console speaker.
 	
 	.PARAMETER Frequency
 		The frequency of the beep, ranging from 37 to 32767 hertz.
@@ -14,7 +14,7 @@
 		The duration of the beep measured in milliseconds.
 	
 	.EXAMPLE
-		PS C:\> New-Beep -Frequency 500 -Duration 300
+		PS C:\> New-WFSpeakerBeep -Frequency 500 -Duration 300
 	
 	.NOTES
 		Author: Francois-Xavier Cat
@@ -39,4 +39,4 @@
 			[System.Console]::Beep($Frequency, $Duration)
 		}
 	}
-} #New-SpeakerBeep
+}

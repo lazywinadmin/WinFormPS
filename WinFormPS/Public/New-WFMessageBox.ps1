@@ -1,11 +1,11 @@
-﻿function New-MessageBox
+﻿function New-WFMessageBox
 {
 <#
 	.SYNOPSIS
-		The New-MessageBox functio will show a message box to the user
+		The New-WFMessageBox functio will show a message box to the user
 	
 	.DESCRIPTION
-		The New-MessageBox functio will show a message box to the user
+		The New-WFMessageBox functio will show a message box to the user
 	
 	.PARAMETER Message
 		Specifies the message to show
@@ -20,7 +20,7 @@
 		Specifies the icon to show. Just press tab to see the choices
 	
 	.EXAMPLE
-		PS C:\> New-MessageBox -Message "Hello World" -Title "First Message" -Buttons "RetryCancel" -Icon "Asterix"
+		PS C:\> New-WFMessageBox -Message "Hello World" -Title "First Message" -Buttons "RetryCancel" -Icon "Asterix"
 	
 	.NOTES
 		Author: Francois-Xavier Cat

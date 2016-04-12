@@ -1,11 +1,11 @@
-﻿function New-InputBox
+﻿function New-WFInputBox
 {
 <#
 	.SYNOPSIS
-		The New-InputBox function will prompt the user for input in a window.
+		The New-WFInputBox function will prompt the user for input in a window.
 	
 	.DESCRIPTION
-		The New-InputBox function will prompt the user for input in a window.
+		The New-WFInputBox function will prompt the user for input in a window.
 	
 	.PARAMETER Message
 		Specifies the question you want to ask to the user.
@@ -17,7 +17,7 @@
 		Specifies the default answer text.
 	
 	.EXAMPLE
-		PS C:\> New-InputBox -Message 'What is your computer name' -Title 'Computer' -DefaultInputText "$env:ComputerName"
+		PS C:\> New-WFInputBox -Message 'What is your computer name' -Title 'Computer' -DefaultInputText "$env:ComputerName"
 	
 	.NOTES
 		Author: Francois-Xavier Cat
