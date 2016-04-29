@@ -30,4 +30,6 @@ Get-Help about_WinFormPS
 
 ## Examples
 
-
+#### Set-WFDataGridView
+This function allow you to perform different action against a DataGridView
+![alt tag](https://github.com/lazywinadmin/WinFormPS/blob/master/Media/Set-WFDataGridView.gif "Set-WFDataGridView.gif")
