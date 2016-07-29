@@ -36,7 +36,13 @@
 	
 	.PARAMETER ShowRowHeader
 		Show the Row Header
-	
+
+	.PARAMETER HideColumnHeader
+		Hide the Column Header
+		
+	.PARAMETER ShowColumnHeader
+		Show the Column Header
+
 	.EXAMPLE
 		Set-WFDataGridView -DataGridView $datagridview1 -ProperFormat -FontFamily $listboxFontFamily.Text -FontSize $listboxFontSize.Text
 	
@@ -49,9 +55,23 @@
 	.EXAMPLE
 		Set-DataGridViewRowHeader -DataGridView $datagridview1 -HideRowHeader
 	
+		This will hide the Row Header
+
 	.EXAMPLE
 		Set-DataGridViewRowHeader -DataGridView $datagridview1 -ShowRowHeader
+
+		This will show the Row Header
+
+	.EXAMPLE
+		Set-DataGridViewRowHeader -DataGridView $datagridview1 -HideColumnHeader
 	
+		This will hide the Column Header
+
+	.EXAMPLE
+		Set-DataGridViewRowHeader -DataGridView $datagridview1 -ShowColumnHeader
+
+		This will show the Column Header
+
 	.NOTES
 		Author: Francois-Xavier Cat
 		Twitter:@LazyWinAdm
@@ -98,7 +118,14 @@
 		[Switch]$HideRowHeader,
 		
 		[Parameter(ParameterSetName = 'ShowRowHeader')]
-		[Switch]$ShowRowHeader
+		[Switch]$ShowRowHeader,
+		
+		[Parameter(ParameterSetName = 'HideColumnHeader')]
+		[Switch]$HideColumnHeader,
+		
+		[Parameter(ParameterSetName = 'ShowColumnHeader')]
+		[Switch]$ShowColumnHeader
+
 	)
 	
 	BEGIN
@@ -154,6 +181,20 @@
 			IF ($PSCmdlet.ShouldProcess($DataGridView, "Show the Row Header"))
 			{
 				$DataGridView.RowHeadersVisible = $true
+			}
+		}
+		if ($psboundparameters['HideColumnHeader'])
+		{
+			IF ($PSCmdlet.ShouldProcess($DataGridView, "Hide the Column Header"))
+			{
+				$DataGridView.ColumnHeadersVisible = $false
+			}
+		}
+		if ($psboundparameters['ShowColumnHeader'])
+		{
+			IF ($PSCmdlet.ShouldProcess($DataGridView, "Show the Column Header"))
+			{
+				$DataGridView.ColumnHeadersVisible = $true
 			}
 		}
 	}
