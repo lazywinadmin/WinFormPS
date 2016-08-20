@@ -66,16 +66,17 @@ PowerShellVersion = '3.0'
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = '*'
+FunctionsToExport = 'Load-DataGridView','Load-ListBox','Refresh-DataGridView','Add-WFDataGridViewColumn','Add-WFDataGridViewRow','Add-WFListViewItem','Add-WFRichTextBoxText','Clear-WFDataGridViewSelection','Clear-WFErrorProvider','Clear-WFListBox','Clear-WFRichTextBox','ConvertTo-WFDataTable','Disable-WFButton','Disable-WFRichTextBox','Disable-WFTabControl','Disable-WFTextBox','Enable-WFButton','Enable-WFRichTextBox','Enable-WFTabControl','Enable-WFTextBox','Find-WFDataGridViewValue','Get-WFCheckedListBoxItem','Get-WFComboboxItem','Get-WFForm','Get-WFListBoxItem','Get-WFListViewItem','Import-WFDataGridView','Import-WFListBox','New-WFBalloonNotification','New-WFInputBox','New-WFMessageBox','New-WFOpenFileDialog','New-WFOpenFolderDialog','New-WFSpeakerBeep','Remove-WFListBoxItem','Reset-WFDataGridViewFormat','Set-WFDataGridView','Set-WFDataGridViewFilter','Set-WFForm','Set-WFListViewColumn','Set-WFRichTextBox','Update-WFDataGridView'
+
 
 # Cmdlets to export from this module
-CmdletsToExport = '*'
+#CmdletsToExport = '*'
 
 # Variables to export from this module
-VariablesToExport = '*'
+#VariablesToExport = '*'
 
 # Aliases to export from this module
-AliasesToExport = '*'
+#AliasesToExport = '*'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -90,9 +91,11 @@ AliasesToExport = '*'
 PrivateData = @{
 
     PSData = @{
+        # Title of the module
+        Title = 'WinFormPS'
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('Winforms', 'GUI', 'Windows Forms')
+        Tags = @('Winforms', 'GUI', 'WindowsForms')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/lazywinadmin/WinFormPS/blob/master/LICENSE.md'
